@@ -28,6 +28,7 @@ class PlayerOne {
   }
 }
 
+
 let player;
 let bullets = []; // Array to store bullets
 
@@ -36,7 +37,7 @@ let bullets = []; // Array to store bullets
 
 
 function draw() {
-    clear();
+  clear();
   drawCrosshair(); // Draw the crosshair
 
   // Calculate the angle between the player and the mouse
