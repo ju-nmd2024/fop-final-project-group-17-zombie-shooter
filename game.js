@@ -1,5 +1,5 @@
-import Zombie from "./zombie.js";
-import Player from "./player.js";
+//import Zombie from "./zombie.js";
+//import Player from "./player.js";
 
 const gridLength = 24;
 const gridSize = 30;
@@ -37,6 +37,7 @@ function draw() {
   player.draw();
   drawGrid();
 
+  
   push();
   // Translate the origin to the center. - how do you make it have the center?
   translate(370, 400);
@@ -52,6 +53,7 @@ function draw() {
   rotate(a);
   player.draw(-50, -5);
   pop();
+  
 
 }
 
