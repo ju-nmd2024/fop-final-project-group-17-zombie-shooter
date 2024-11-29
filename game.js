@@ -1,11 +1,11 @@
-//import Zombie from "./zombie.js";
-//import Player from "./player.js";
+import Zombie from "./zombie.js";
+import Player from "./player.js";
 
 const gridLength = 24;
 const gridSize = 30;
 
 function preload () {
-  map = loadImage ("map.png");
+  gameMap = loadImage ("map.png");
 }
 
 window.preload = preload;
@@ -32,7 +32,7 @@ function drawGrid() {
 }
 
 function draw() {
-  image (map, 0, 0);
+  image (gameMap, 0, 0);
   zombie.draw();
   player.draw();
   drawGrid();
