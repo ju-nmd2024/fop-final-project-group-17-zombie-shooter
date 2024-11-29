@@ -1,4 +1,4 @@
-class Zombie {
+export default class Zombie {
     constructor (x, y) {
         this.x = x;
         this.y = y;

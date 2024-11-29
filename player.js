@@ -1,5 +1,3 @@
-
-
 export default class Player {
   constructor (x, y) {
       this.x = x;
