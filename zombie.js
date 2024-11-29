@@ -5,7 +5,7 @@ class Zombie {
     }
     draw() {
         fill (50, 150, 100);
-        rect(this.x, this.y, 75, 50);
+        rect(this.x, this.y, 30, 30);
     }
 
 }
