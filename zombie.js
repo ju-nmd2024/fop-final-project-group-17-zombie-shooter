@@ -1,8 +1,3 @@
-<<<<<<< Updated upstream
-=======
-import WayPoint from "./waypoints";
-
->>>>>>> Stashed changes
 export default class Zombie {
     constructor (x, y) {
         this.x = x;
