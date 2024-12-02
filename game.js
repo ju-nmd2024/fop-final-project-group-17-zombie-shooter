@@ -1,5 +1,5 @@
 import zombie from "./zombie.js";
-import player from "./workingshooter.js";
+import player from "./player.js";
 
 const gridLength = 24;
 const gridSize = 30;
@@ -31,13 +31,22 @@ function drawGrid() {
   pop();
 }
 
+function drawCrosshair() {
+  // Draw a crosshair at the mouse position
+  stroke(255, 0, 0);
+  line(mouseX - 10, mouseY, mouseX + 10, mouseY); // Horizontal line
+  line(mouseX, mouseY - 10, mouseX, mouseY + 10); // Vertical line
+}
+
+
 function draw() {
   image (gameMap, 0, 0);
   zombie.draw();
   player.draw();
+  drawCrosshair();
+
   drawGrid();
 
-  push();
   // Translate the origin to the center. - how do you make it have the center?
   translate(370, 400);
 
@@ -51,8 +60,7 @@ function draw() {
   // Rotate
   rotate(a);
   player.draw(-50, -5);
-  pop();
-
+  
 }
 
 window.draw = draw;
