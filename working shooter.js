@@ -1,4 +1,4 @@
-class PlayerOne {
+export default class Player {
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -33,7 +33,7 @@ let player;
 let bullets = []; // Array to store bullets
 
 
-  player = new PlayerOne(width / 2, height / 2); // Initialize the player at the canvas center
+  player = new Player (width / 2, height / 2); // Initialize the player at the canvas center
 
 
 function draw() {
