@@ -1,5 +1,6 @@
 import zombie from "./zombie.js";
 import player from "./player.js";
+import BulletManager from "./bulletManager.js";
 
 const gridLength = 24;
 const gridSize = 30;
@@ -38,11 +39,9 @@ function drawCrosshair() {
   line(mouseX, mouseY - 10, mouseX, mouseY + 10); // Vertical line
 }
 
-
 function draw() {
   image (gameMap, 0, 0);
   zombie.draw();
-
   drawCrosshair();
   drawGrid();
 
@@ -58,8 +57,9 @@ function draw() {
 
   // Rotate
   rotate(a);
-  player.draw(-50, -5);
+  player.draw(a);
   
 }
 
 window.draw = draw;
+
