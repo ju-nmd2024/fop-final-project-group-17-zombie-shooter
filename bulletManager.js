@@ -1,4 +1,4 @@
-import Bullet from "./Bullet.js";
+import Bullet from "./bullets.js";
 
 export default class BulletManager {
   constructor() {
