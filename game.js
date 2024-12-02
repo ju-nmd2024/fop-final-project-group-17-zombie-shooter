@@ -1,6 +1,6 @@
 import zombie from "./zombie.js";
 import player from "./player.js";
-import BulletManager from "./bulletManager.js";
+import bulletManager from "./bulletManager.js";
 
 const gridLength = 24;
 const gridSize = 30;
