@@ -4,6 +4,9 @@ import bulletManager from "./bulletManager.js";
 
 const gridLength = 24;
 const gridSize = 30;
+const dx = mouseX - player.x;
+const dy = mouseY - player.y;
+const angle = atan2(dy, dx);
 
 function preload () {
   gameMap = loadImage ("map.png");
@@ -39,18 +42,38 @@ function drawCrosshair() {
   line(mouseX, mouseY - 10, mouseX, mouseY + 10); // Vertical line
 }
 
+function mousePressed() {
+  // Calculate the angle between the player and the mouse
+  const dx = mouseX - 370; // Adjusted based on the translation
+  const dy = mouseY - 400; // Adjusted based on the translation
+  const angle = atan2(dy, dx);
+
+  // Fire a bullet from the player's position, adjusted for the player's rotation
+  const bulletX = 370 + cos(angle) * 35; // Adjust based on angle and translation
+  const bulletY = 400 + sin(angle) * 35; // Adjust based on angle and translation
+
+  // Fire the bullet
+  bulletManager.fireBullet(bulletX, bulletY, angle);
+}
+
+window.mousePressed = mousePressed;
+
 function draw() {
-  image (gameMap, 0, 0);
+  image(gameMap, 0, 0);
   zombie.draw();
   drawCrosshair();
   drawGrid();
 
-  // Translate the origin to the center. - how do you make it have the center?
+  // Update bullets and draw them
+  bulletManager.updateBullets();
+  bulletManager.drawBullets();
+
+  // Translate the origin to the center.
   translate(370, 400);
 
   // Get the mouse's coordinates relative to the origin.
-  x = mouseX - 395;
-  y = mouseY - 400;
+  let x = mouseX - 395;
+  let y = mouseY - 400;
 
   // Calculate the angle between the mouse and the origin.
   let a = atan2(y, x);
@@ -58,7 +81,6 @@ function draw() {
   // Rotate
   rotate(a);
   player.draw(a);
-  
 }
 
 window.draw = draw;

@@ -4,7 +4,7 @@ export default class Bullet {
       this.y = y;
       this.angle = angle;
       this.speed = speed;
-      this.radius = 5; // Size of the bullet
+      this.radius = 15; // Size of the bullet
     }
   
     update() {
