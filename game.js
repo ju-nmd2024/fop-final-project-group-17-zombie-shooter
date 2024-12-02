@@ -1,5 +1,5 @@
-import Zombie from "./zombie.js";
-import Player from "./workingshooter.js";
+import zombie from "./zombie.js";
+import player from "./workingshooter.js";
 
 const gridLength = 24;
 const gridSize = 30;
