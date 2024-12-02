@@ -42,9 +42,8 @@ function drawCrosshair() {
 function draw() {
   image (gameMap, 0, 0);
   zombie.draw();
-  player.draw();
-  drawCrosshair();
 
+  drawCrosshair();
   drawGrid();
 
   // Translate the origin to the center. - how do you make it have the center?
