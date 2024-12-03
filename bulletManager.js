@@ -14,16 +14,24 @@ class BulletManager {
   }
 
   updateBullets() {
-    // Loop through all bullets and move them
     for (let i = this.bullets.length - 1; i >= 0; i--) {
       let bullet = this.bullets[i];
-      // Update bullet position based on angle
+  
+      // Move the bullet
       bullet.x += cos(bullet.angle) * bullet.speed;
       bullet.y += sin(bullet.angle) * bullet.speed;
-
-      // Remove bullet if it goes off-screen
-      if (bullet.x < 0 || bullet.x > width || bullet.y < 0 || bullet.y > height) {
-        this.bullets.splice(i, 1);
+  
+      // Check if the bullet collides with any obstacle
+      for (let obstacle of obstacles) {
+        if (
+          bullet.x > obstacle.x &&
+          bullet.x < obstacle.x + obstacle.w &&
+          bullet.y > obstacle.y &&
+          bullet.y < obstacle.y + obstacle.h
+        ) {
+          this.bullets.splice(i, 1); // Remove bullet on collision
+          break;
+        }
       }
     }
   }

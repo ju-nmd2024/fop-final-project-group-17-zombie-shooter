@@ -1,4 +1,3 @@
-import zombie from "./zombie.js";
 import player from "./player.js";
 import bulletManager from "./bulletManager.js";
 
@@ -35,6 +34,19 @@ function drawGrid() {
   pop();
 }
 
+const obstacles = [
+  { x: 150, y: 150, w: 100, h: 30 },
+  { x: 300, y: 300, w: 150, h: 40 }
+];
+
+function drawObstacles() {
+  fill(255, 0, 0, 100); // Red with some transparency for testing
+  noStroke(); // No border around the rectangles
+  for (let obstacle of obstacles) {
+    rect(obstacle.x, obstacle.y, obstacle.w, obstacle.h);
+  }
+}
+
 function drawCrosshair() {
   // Draw a crosshair at the mouse position
   stroke(255, 0, 0);
@@ -60,9 +72,10 @@ window.mousePressed = mousePressed;
 
 function draw() {
   image(gameMap, 0, 0);
-  zombie.draw();
   drawCrosshair();
   drawGrid();
+
+  drawObstacles(); // Draw obstacles (visible for testing)
 
   // Update bullets and draw them
   bulletManager.updateBullets();
