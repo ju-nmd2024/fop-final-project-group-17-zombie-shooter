@@ -28,6 +28,7 @@ class BulletManager {
           bullet.x < obstacle.x + obstacle.w &&
           bullet.y > obstacle.y &&
           bullet.y < obstacle.y + obstacle.h
+          //insert zombie obtsacle logic
         ) {
           this.bullets.splice(i, 1); // Remove bullet on collision
           break;
