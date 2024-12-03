@@ -1,16 +1,11 @@
-import PathTopLeft from "./pathTopLeft";
-import PathTopright from "./pathTopRight";
-import PathBottomLeft from "./pathBottomLeft";
-import PathBottomRight from "./pathBottomRight";
-
 class Zombie {
 
-    constructor(spawnPoint, path, speed = 2) {
+    constructor(spawnPoint, speed = 2) {
         this.x = spawnPoint.x;
         this.y = spawnPoint.y;
-        this.path = path;
         this.speed = speed;
         this.currentWaypointIndex = 0;
+        this.spawnPoint = spawnPoint;
     }
 
     moveTowards(target) {
@@ -29,7 +24,7 @@ class Zombie {
     }
 
     update() {
-        if (this.currentWaypointIndex < this.path.length) {
+        if (this.currentWaypointIndex < this.spawnPoint.path.length) {
             this.moveTowards(this.path[this.currentWaypointIndex]);
         }
     }
