@@ -2,8 +2,8 @@ import zombie from "./zombie.js";
 import player from "./player.js";
 import bulletManager from "./bulletManager.js";
 
-const gridLength = 24;
-const gridSize = 30;
+const gridHeight = 24;
+const gridWidth = 30;
 const dx = mouseX - player.x;
 const dy = mouseY - player.y;
 const angle = atan2(dy, dx);
@@ -27,8 +27,8 @@ function drawGrid() {
   push();
   stroke(255, 255, 255);
   noFill();
-  for (let x = 0; x < gridLength; x++) {
-    for (let y = 0; y < gridLength; y++) {
+  for (let x = 0; x < gridHeight; x++) {
+    for (let y = 0; y < gridHeight; y++) {
       rect(x * gridWidth, y * gridWidth, gridWidth, gridWidth);
     }
   }
