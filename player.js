@@ -35,24 +35,6 @@ export default class Player {
       line(mouseX - 10, mouseY, mouseX + 10, mouseY); // Horizontal line
       line(mouseX, mouseY - 10, mouseX, mouseY + 10); // Vertical line
     }
-      
-    // aim() {
-    //   //make it into a function and call in the main game.js file
-    
-    //   // Translate the origin to the center. - how do you make it have the center?
-    //   translate(275, 250);
-    
-    //   // Get the mouse's coordinates relative to the origin.
-    //   x = mouseX - 275;
-    //   y = mouseY - 250;
-    
-    //   // Calculate the angle between the mouse and the origin.
-    //   let aimRotation = atan2(y, x);
-    
-    //   // Rotate
-    //   rotate(aimRotation);
-      
-    // }
   
 }
 
