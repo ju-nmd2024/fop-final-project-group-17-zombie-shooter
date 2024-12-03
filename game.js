@@ -9,6 +9,7 @@ const angle = atan2(dy, dx);
 
 function preload () {
   gameMap = loadImage ("map.png");
+  startScreen = loadImage ("startscreen.png");
 }
 
 window.preload = preload;
