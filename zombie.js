@@ -1,4 +1,7 @@
-import PathTopLeft from "./waypoints";
+import PathTopLeft from "./pathTopLeft";
+import PathTopright from "./pathTopRight";
+import PathBottomLeft from "./pathBottomLeft";
+import PathBottomRight from "./pathBottomRight";
 
 export default class Zombie {
     constructor (x, y, gridWidth, gridLength) {
