@@ -9,7 +9,7 @@ class BulletManager {
       x: x,
       y: y,
       angle: angle,
-      speed: 10
+      speed: 15
     });
   }
 
