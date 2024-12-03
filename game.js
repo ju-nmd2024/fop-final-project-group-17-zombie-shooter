@@ -2,7 +2,7 @@ import Zombie from "./zombie.js";
 import Player from "./player.js";
 
 const gridLength = 24;
-const gridSize = 30;
+const gridWidth = 30;
 
 function preload () {
   gameMap = loadImage ("map.png");
@@ -25,7 +25,7 @@ function drawGrid() {
   noFill();
   for (let x = 0; x < gridLength; x++) {
     for (let y = 0; y < gridLength; y++) {
-      rect(x * gridSize, y * gridSize, gridSize, gridSize);
+      rect(x * gridWidth, y * gridWidth, gridWidth, gridWidth);
     }
   }
   pop();
