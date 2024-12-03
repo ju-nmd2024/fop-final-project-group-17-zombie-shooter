@@ -3,7 +3,7 @@ import PathTopright from "./pathTopRight";
 import PathBottomLeft from "./pathBottomLeft";
 import PathBottomRight from "./pathBottomRight";
 
-export default class Zombie {
+class Zombie {
     constructor (x, y, gridWidth, gridLength) {
         this.x = x;
         this.y = y;
@@ -13,27 +13,27 @@ export default class Zombie {
         this.gridLenth = gridLength;
     }
 
-    moveTowards(target) {
-        const dx = target.x - this.x;
-        const dy = target.y - this.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+    // moveTowards(target) {
+    //     const dx = target.x - this.x;
+    //     const dy = target.y - this.y;
+    //     const distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance > this.speed) {
-            this.x += (dx / distance) * this.speed;
-            this.y += (dy / distance) * this.speed;
-          } else {
-            // Snap to the waypoint if close enough
-            this.x = target.x;
-            this.y = target.y;
-            this.currentWaypointIndex++; // Move to the next waypoint
-        }
-    }
+    //     if (distance > this.speed) {
+    //         this.x += (dx / distance) * this.speed;
+    //         this.y += (dy / distance) * this.speed;
+    //       } else {
+    //         // Snap to the waypoint if close enough
+    //         this.x = target.x;
+    //         this.y = target.y;
+    //         this.currentWaypointIndex++; // Move to the next waypoint
+    //     }
+    // }
     
-    update() {
-        if (this.currentWaypointIndex < path.length) {
-          this.moveTowards(path[this.currentWaypointIndex]);
-        }
-      }
+    // update() {
+    //     if (this.currentWaypointIndex < path.length) {
+    //       this.moveTowards(path[this.currentWaypointIndex]);
+    //     }
+    //   }
 
     draw() {
         fill (50, 150, 100);

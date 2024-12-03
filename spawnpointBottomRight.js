@@ -1,8 +1,8 @@
-export default class SpawnpointTopLeft {
+export default class Spawnpoint {
     constructor (x, y, gridWidth, gridHeight) {
         this.x = x;
         this.y = y;
-        const spawnpointTopLeft = (x + 2, y + 2);
+        const spawnpointBottomRight = (x + 23, y + 23);
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
     }
