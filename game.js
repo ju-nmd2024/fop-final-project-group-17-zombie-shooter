@@ -42,10 +42,17 @@ const obstacles = [
   { x: 140, y: 420, w: 70, h: 80 },
   { x: 530, y: 520, w: 40, h: 70 },
   { x: 215, y: 550, w: 40, h: 70 },
+  { x: 625, y: 300, w: 30, h: 80 },
+  { x: 565, y: 420, w: 60, h: 40 },
+  { x: 240, y: 30, w: 130, h: 70 },
+  { x: 50, y: 270, w: 30, h: 80 },
+  { x: 310, y: 580, w:50, h: 70 },
+  { x: 420, y: 590, w:60, h: 40 },
+  { x: 480, y: 615, w:30, h: 40 },
 ];
 
 function drawObstacles() {
-  fill(255, 0, 0, 100); // Red with some transparency for testing
+  fill(0, 0, 0, 0); // Red with some transparency for testing
   noStroke(); // No border around the rectangles
   for (let obstacle of obstacles) {
     rect(obstacle.x, obstacle.y, obstacle.w, obstacle.h);
