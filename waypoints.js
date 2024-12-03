@@ -1,5 +1,5 @@
 export default class PathTopLeft {
-    constructor (x, y, gridWidth, gridLength) {
+    constructor (x, y, gridWidth, gridHeight) {
         // this.x = x;
         // this.y = y;
         const waypoint = (x + 7, y + 2);
@@ -12,12 +12,12 @@ export default class PathTopLeft {
         const waypoint8 = (x + 8, y + 14);
         const waypoint9 = (x + 11, y + 14);
         this.gridWidth = gridWidth;
-        this.gridLenth = gridLength;
+        this.gridHeight = gridHeight;
     }
 }
 
 export default class PathTopRight {
-    constructor (x, y, gridWidth, gridLength) {
+    constructor (x, y, gridWidth, gridHeight) {
         const waypoint = (x + 23, y + 10);
         const waypoint2 = (x + 18, y + 10);
         const waypoint3 = (x + 18, y + 2);
@@ -26,12 +26,12 @@ export default class PathTopRight {
         const waypoint6 = (x + 13, y + 11);
         const waypoint7 = (x + 13, y + 12);
         this.gridWidth = gridWidth;
-        this.gridLenth = gridLength;
+        this.gridHeight = gridHeight;
     }
 }
 
 export default class PathBottomLeft {
-    constructor (x, y, gridWidth, gridLength) {
+    constructor (x, y, gridWidth, gridHeight) {
         const waypoint = (x + 2, y + 13);
         const waypoint2 = (x + 4, y + 13);
         const waypoint3 = (x + 4, y + 19);
@@ -41,12 +41,12 @@ export default class PathBottomLeft {
         const waypoint7 = (x + 10, y + 18);
         const waypoint8 = (x + 13, y + 15);
         this.gridWidth = gridWidth;
-        this.gridLenth = gridLength;
+        this.gridHeight = gridHeight;
     }
 }
 
 export default class PathBottomRight {
-    constructor (x, y, gridWidth, gridLength) {
+    constructor (x, y, gridWidth, gridHeight) {
         const waypoint = (x + 23, y + 19);
         const waypoint2 = (x + 20, y + 19);
         const waypoint3 = (x + 20, y + 16);
@@ -58,6 +58,6 @@ export default class PathBottomRight {
         const waypoint9 = (x + 15, y + 14);
         const waypoint10 = (x + 14, y + 14);
         this.gridWidth = gridWidth;
-        this.gridLenth = gridLength;
+        this.gridHeight = gridHeight;
     }
 }
