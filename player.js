@@ -5,7 +5,6 @@ export default class Player {
   }
 
   draw(x, y) {
-
     //the graphics of the player
       push();
       translate(0, 0);

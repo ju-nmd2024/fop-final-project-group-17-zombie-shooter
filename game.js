@@ -10,7 +10,18 @@ const gridHeight = 24;
 const gridWidth = 30;
 const dx = mouseX - player.x;
 const dy = mouseY - player.y;
-const angle = atan2(dy, dx);
+// const angle = atan2(dy, dx);
+
+const path1 = [
+  { x: 7, y: 2 },
+  { x: 7, y: 5 },
+  { x: 12, y: 5 },
+  { x: 12, y: 8 },
+  { x: 10, y: 8 },
+  { x: 8, y: 11 },
+  { x: 8, y: 14 },
+  { x: 11, y: 14 },
+];
 
 //top left spawnpoint+path
 const spawnpoint1 = new Spawnpoint(2, 2, new Path(
@@ -24,6 +35,9 @@ const spawnpoint1 = new Spawnpoint(2, 2, new Path(
   new Position (8, 14),
   new Position (11, 14)
 ));
+
+const zombie1 = new Zombie(spawnpoint1, spawnnpoint1);
+
 //top right spawnpoint+path
 const spawnpoint2 = new Spawnpoint(23, 2, new Path(
   new Position (23, 10),
@@ -59,6 +73,8 @@ const spawnpoint4 = new Spawnpoint(23, 23, new Path(
   new Position (14, 14)
 ));
 
+window.preload = preload;
+
 function preload () {
   gameMap = loadImage ("map.png");
   startScreen = loadImage ("startscreen.png");
@@ -67,10 +83,12 @@ function preload () {
   // // Initialize the ZombieManager
   // zombieManager = new ZombieManager(spawnPoint, path);
 
-window.preload = preload;
+// window.preload = preload;
 
 function setup() {
   createCanvas(720, 720);
+  // loadImage ("map.png"); // gameMap =  //is it supposed to be here or in the perload thing?
+  // loadImage ("startscreen.png"); //startScreen = 
 }
 
 window.setup = setup;
@@ -89,8 +107,6 @@ function drawGrid() {
   }
   pop();
 }
-
-//four spawn points in here, positions
 
 const obstacles = [
   { x: 140, y: 180, w: 80, h: 80 },
@@ -139,6 +155,7 @@ function mousePressed() {
 }
 
 window.mousePressed = mousePressed;
+// let zombie = new Zombie(100,100);
 
 function draw() {
   image(gameMap, 0, 0);
@@ -150,29 +167,30 @@ function draw() {
   // zombieManager.update(millis());
   // zombieManager.draw();
   
-  for (i = 0; i < spawnpoint1.zombieArray.length; i++) {
-    let zombie = spawnpoint1.zombieArray[i];
-    zombie.update();
-    zombie.draw();
-    }
+  // //from my brother i think, array from spawnpoint one, topleft corner
+  // for (i = 0; i < spawnpoint1.zombieArray.length; i++) {
+  //   let zombie = spawnpoint1.zombieArray[i];
+  //   zombie.update();
+  //   zombie.draw();
+  //   }
 
   // Update bullets and draw them
   bulletManager.updateBullets();
   bulletManager.drawBullets();
 
+  push();
   // Translate the origin to the center.
   translate(370, 400);
-
   // Get the mouse's coordinates relative to the origin.
   let x = mouseX - 395;
   let y = mouseY - 400;
-
   // Calculate the angle between the mouse and the origin.
   let a = atan2(y, x);
-
   // Rotate
   rotate(a);
   player.draw(a);
+  pop();
+
 }
 
 window.draw = draw;
