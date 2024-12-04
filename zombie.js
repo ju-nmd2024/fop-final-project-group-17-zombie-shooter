@@ -1,33 +1,37 @@
-class Zombie {
+export default class Zombie {
 
-    constructor(spawnPoint, speed = 2) {
-        this.x = spawnPoint.x;
-        this.y = spawnPoint.y;
+    constructor(spawnpoint, speed = 2) {
+        this.x = spawnpoint.x;
+        this.y = spawnpoint.y;
         this.speed = speed;
-        this.currentWaypointIndex = 0;
-        this.spawnPoint = spawnPoint;
+        // this.currentWaypointIndex = 0;
+        // this.spawnPoint = spawnPoint;
     }
 
-    moveTowards(target) {
-        const dx = target.x - this.x;
-        const dy = target.y - this.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance > this.speed) {
-            this.x += (dx / distance) * this.speed;
-            this.y += (dy / distance) * this.speed;
-        } else {
-            this.x = target.x;
-            this.y = target.y;
-            this.currentWaypointIndex++;
-        }
+    moveTowards() {
+        
     }
 
-    update() {
-        if (this.currentWaypointIndex < this.spawnPoint.path.length) {
-            this.moveTowards(this.path[this.currentWaypointIndex]);
-        }
-    }
+    // moveTowards(target) {
+    //     const dx = target.x - this.x;
+    //     const dy = target.y - this.y;
+    //     const distance = Math.sqrt(dx * dx + dy * dy);
+
+    //     if (distance > this.speed) {
+    //         this.x += (dx / distance) * this.speed;
+    //         this.y += (dy / distance) * this.speed;
+    //     } else {
+    //         this.x = target.x;
+    //         this.y = target.y;
+    //         this.currentWaypointIndex++;
+    //     }
+    // }
+
+    // update() {
+    //     if (this.currentWaypointIndex < this.spawnPoint.path.length) {
+    //         this.moveTowards(this.path[this.currentWaypointIndex]);
+    //     }
+    // }
 
     draw() {
         fill(150, 50, 50);

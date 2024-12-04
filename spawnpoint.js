@@ -1,4 +1,5 @@
 import Path from "./path.js";
+// import Zombie from "./zombie.js"
 
 export default class Spawnpoint {
     constructor(x, y, path) {

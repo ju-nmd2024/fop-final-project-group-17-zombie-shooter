@@ -3,7 +3,8 @@ import bulletManager from "./bulletManager.js";
 import Path from "./path.js";
 import Spawnpoint from "./spawnpoint.js";
 import Position from "./position.js";
-import { ZombieManager } from "./zombieManager.js";
+import Zombie from "./zombie.js";
+// import { ZombieManager } from "./zombieManager.js";
 
 const gridHeight = 24;
 const gridWidth = 30;
@@ -11,25 +12,60 @@ const dx = mouseX - player.x;
 const dy = mouseY - player.y;
 const angle = atan2(dy, dx);
 
+//top left spawnpoint+path
 const spawnpoint1 = new Spawnpoint(2, 2, new Path(
   new Position (7, 2),
   new Position (7, 5),
-  new Position (12, 5) ));
-const spawnpoint2 = new Spawnpoint(2, 2);
-const spawnpoint3 = new Spawnpoint(2, 2);
-const spawnpoint4 = new Spawnpoint(2, 2);
+  new Position (12, 5),
+  new Position (12, 8),
+  new Position (10, 8),
+  new Position (10, 11),
+  new Position (8, 11),
+  new Position (8, 14),
+  new Position (11, 14)
+));
+//top right spawnpoint+path
+const spawnpoint2 = new Spawnpoint(23, 2, new Path(
+  new Position (23, 10),
+  new Position (18, 10),
+  new Position (18, 2),
+  new Position (14, 2),
+  new Position (14, 11),
+  new Position (13, 11),
+  new Position (13, 12)
+));
+// bottom left spawnpoint+path
+const spawnpoint3 = new Spawnpoint(2, 23, new Path(
+  new Position (2, 13),
+  new Position (4, 13),
+  new Position (2, 19),
+  new Position (6, 19),
+  new Position (6, 23),
+  new Position (10, 23),
+  new Position (10, 18),
+  new Position (13, 15)
+));
+//bottom right spawnpoint+path
+const spawnpoint4 = new Spawnpoint(23, 23, new Path(
+  new Position (13, 19),
+  new Position (2, 19),
+  new Position (20, 16),
+  new Position (23, 16),
+  new Position (23, 14),
+  new Position (18, 14),
+  new Position (18, 18),
+  new Position (15, 18),
+  new Position (15, 14),
+  new Position (14, 14)
+));
 
 function preload () {
   gameMap = loadImage ("map.png");
   startScreen = loadImage ("startscreen.png");
 }
 
-  // Initialize the spawn point and path
-  const spawnPoint = new SpawnpointTopLeft(50, 50); // Adjust spawn location as needed
-  const path = new PathTopLeft(0, 0, gridWidth, gridHeight).getWaypoints();
-
-  // Initialize the ZombieManager
-  zombieManager = new ZombieManager(spawnPoint, path);
+  // // Initialize the ZombieManager
+  // zombieManager = new ZombieManager(spawnPoint, path);
 
 window.preload = preload;
 
@@ -113,7 +149,6 @@ function draw() {
 
   // zombieManager.update(millis());
   // zombieManager.draw();
-
   
   for (i = 0; i < spawnpoint1.zombieArray.length; i++) {
     let zombie = spawnpoint1.zombieArray[i];
@@ -141,4 +176,3 @@ function draw() {
 }
 
 window.draw = draw;
-
