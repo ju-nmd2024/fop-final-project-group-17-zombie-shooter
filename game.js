@@ -4,7 +4,6 @@ import Path from "./path.js";
 import Spawnpoint from "./spawnpoint.js";
 import Position from "./position.js";
 import Zombie from "./zombie.js";
-// import { ZombieManager } from "./zombieManager.js";
 
 const gridHeight = 24;
 const gridWidth = 30;
@@ -24,7 +23,7 @@ const path1 = [
 ];
 
 //top left spawnpoint+path
-const spawnpoint1 = new Spawnpoint(2, 2, new Path(
+const spawnpoint1 = new Spawnpoint(2 * gridWidth, 2 * gridHeight, new Path(
   new Position (7, 2),
   new Position (7, 5),
   new Position (12, 5),
@@ -36,7 +35,7 @@ const spawnpoint1 = new Spawnpoint(2, 2, new Path(
   new Position (11, 14)
 ));
 
-const zombie1 = new Zombie(spawnpoint1, spawnnpoint1);
+const zombie1 = new Zombie(spawnpoint1, 2);
 
 //top right spawnpoint+path
 const spawnpoint2 = new Spawnpoint(23, 2, new Path(
@@ -164,15 +163,17 @@ function draw() {
 
   drawObstacles(); // Draw obstacles (visible for testing)
 
-  // zombieManager.update(millis());
-  // zombieManager.draw();
-  
-  // //from my brother i think, array from spawnpoint one, topleft corner
-  // for (i = 0; i < spawnpoint1.zombieArray.length; i++) {
-  //   let zombie = spawnpoint1.zombieArray[i];
-  //   zombie.update();
-  //   zombie.draw();
-  //   }
+
+  if (spawnpoint1.zombieArray.length === 0) {
+    spawnpoint1.spawnZombie();
+  }
+
+  // from my brother i think, array from spawnpoint one, topleft corner
+  for (i = 0; i < spawnpoint1.zombieArray.length; i++) {
+    let zombie = spawnpoint1.zombieArray[i];
+    zombie.update();
+    zombie.draw();
+    }
 
   // Update bullets and draw them
   bulletManager.updateBullets();
