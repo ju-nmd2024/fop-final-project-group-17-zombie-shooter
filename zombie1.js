@@ -1,6 +1,6 @@
 import { waypoints } from "./waypoints";
 
-export default class ZombieOne {
+export default class Zombie1 {
     constructor(x, y) {
         this.waypointIndex = 0;
         this.speed = 2;
@@ -14,16 +14,20 @@ export default class ZombieOne {
     }
 
     update() {
-        // this.draw();
+        this.draw();
         // this.y += 0.1;
 
         const waypoint = waypoints[this.waypointIndex];
 
         if (this.x < waypoint.x ) {
             this.x = this.x + this.speed;
+            } else if (this.x > waypoint.x) {
+                this.x = this.x - this.speed;
             }
         if (this.y < waypoint.y ) {
             this.y = this.y + this.speed;
+             } else if (this.y > waypoint.y) {
+                this.y = this.y - this.speed;
             }
             
         if (this.y === waypoint.y && this.x === waypoint.x) {

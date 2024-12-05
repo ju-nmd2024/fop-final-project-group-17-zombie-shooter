@@ -1,14 +1,28 @@
-import { waypoints4 } from "./waypoints";
+let gridWidth = 30;
+let gridHeight = 24;
 
-class Zombie4 {
+
+//bottom right path
+const waypoints4 = [
+  { x: 23 * gridWidth, y: 19 * gridHeight},
+  { x: 20 * gridWidth, y: 19 * gridHeight},
+  { x: 20 * gridWidth, y: 16 * gridHeight},
+  { x: 23 * gridWidth, y: 16 * gridHeight},
+  { x: 23 * gridWidth, y: 14 * gridHeight},
+  { x: 18 * gridWidth, y: 14 * gridHeight},
+  { x: 18 * gridWidth, y: 18 * gridHeight},
+  { x: 15 * gridWidth, y: 18 * gridHeight},
+  { x: 15 * gridWidth, y: 14 * gridHeight},
+  { x: 14 * gridWidth, y: 14 * gridHeight},
+];
+
+export default class ZombieFour {
     constructor(x, y) {
+        this.waypointIndex = 0;
+        this.speed = 2;
         this.x = x;
         this.y = y;
-        // { position = { x: 0, y: 0} }
-        // this.position = position;
-        this.waypointIndex = 0;
-
-        this.speed = 2;
+        // this.waypoints = waypoints;
     }
 
     draw() {
@@ -24,27 +38,30 @@ class Zombie4 {
 
         if (this.x < waypoint.x ) {
             this.x = this.x + this.speed;
+            } else if (this.x > waypoint.x) {
+                this.x = this.x - this.speed;
             }
         if (this.y < waypoint.y ) {
             this.y = this.y + this.speed;
+             } else if (this.y > waypoint.y) {
+                this.y = this.y - this.speed;
             }
             
-        if (this.y === waypoint.y || this.x === waypoint.x) {
-            //I figured that it should be || instead of &&
+        if (this.y === waypoint.y && this.x === waypoint.x && this.waypointIndex <= waypoints4.length - 1) {
             this.waypointIndex++;
             console.log(this.waypointIndex);
         }
-        console.log(this.x);
-    }
     
+    }
+
 }
 
 
 
-const zombie = new Zombie4 (23 * 30, 2 * 24); 
-// position: { x: waypoints[0].x, y: waypoints[0].y}
+// const zombie = new ZombieFour (23 * 30, 23 * 24); 
+// // position: { x: waypoints[0].x, y: waypoints[0].y}
 
-function draw() {
-    clear();
-    zombie.update();
-}
+// function draw() {
+//     clear();
+//     zombie.update();
+// }

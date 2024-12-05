@@ -1,14 +1,24 @@
-import { waypoints2 } from "./waypoints";
+let gridWidth = 30;
+let gridHeight = 24;
 
-class Zombie2 {
+//top right path
+const waypoints2 = [
+    { x: 23 * gridWidth, y: 11 * gridHeight},
+    { x: 18 * gridWidth, y: 11 * gridHeight},
+    { x: 18 * gridWidth, y: 2 * gridHeight},
+    { x: 13 * gridWidth, y: 2 * gridHeight},
+    { x: 13 * gridWidth, y: 13 * gridHeight},
+    { x: 14 * gridWidth, y: 13 * gridHeight},
+    { x: 14* gridWidth, y: 15 * gridHeight},
+];
+
+export default class ZombieTwo {
     constructor(x, y) {
+        this.waypointIndex = 0;
+        this.speed = 2;
         this.x = x;
         this.y = y;
-        // { position = { x: 0, y: 0} }
-        // this.position = position;
-        this.waypointIndex = 0;
-
-        this.speed = 2;
+        // this.waypoints = waypoints;
     }
 
     draw() {
@@ -24,27 +34,22 @@ class Zombie2 {
 
         if (this.x < waypoint.x ) {
             this.x = this.x + this.speed;
+            } else if (this.x > waypoint.x) {
+                this.x = this.x - this.speed;
             }
         if (this.y < waypoint.y ) {
             this.y = this.y + this.speed;
+             } else if (this.y > waypoint.y) {
+                this.y = this.y - this.speed;
             }
             
-        if (this.y === waypoint.y || this.x === waypoint.x) {
-            //I figured that it should be || instead of &&
+        if (this.y === waypoint.y && this.x === waypoint.x && this.waypointIndex <= waypoints2.length - 1) {
             this.waypointIndex++;
             console.log(this.waypointIndex);
         }
-        console.log(this.x);
-    }
     
+    }
+
 }
 
-
-
-const zombie = new Zombie2 (23 * 30, 2 * 24); 
-// position: { x: waypoints[0].x, y: waypoints[0].y}
-
-function draw() {
-    clear();
-    zombie.update();
-}
+//we need to add zombie collisison, zombie spawn rate

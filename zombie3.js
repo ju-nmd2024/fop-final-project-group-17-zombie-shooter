@@ -1,14 +1,26 @@
-import { waypoints3 } from "./waypoints";
+let gridWidth = 30;
+let gridHeight = 24;
 
-class Zombie3 {
+//bottom left path
+const waypoints3 = [
+    { x: 2 * gridWidth, y: 15 * gridHeight},
+    { x: 4 * gridWidth, y: 15 * gridHeight},
+    { x: 4 * gridWidth, y: 23 * gridHeight},
+    { x: 6 * gridWidth, y: 23 * gridHeight},
+    { x: 6 * gridWidth, y: 28 * gridHeight},
+    { x: 9 * gridWidth, y: 28 * gridHeight},
+    { x: 9* gridWidth, y: 22 * gridHeight},
+    { x: 13 * gridWidth, y: 22 * gridHeight},
+    { x: 13 * gridWidth, y: 19 * gridHeight},
+];
+
+export default class ZombieThree {
     constructor(x, y) {
+        this.waypointIndex = 0;
+        this.speed = 2;
         this.x = x;
         this.y = y;
-        // { position = { x: 0, y: 0} }
-        // this.position = position;
-        this.waypointIndex = 0;
-
-        this.speed = 2;
+        // this.waypoints = waypoints;
     }
 
     draw() {
@@ -24,24 +36,27 @@ class Zombie3 {
 
         if (this.x < waypoint.x ) {
             this.x = this.x + this.speed;
+            } else if (this.x > waypoint.x) {
+                this.x = this.x - this.speed;
             }
         if (this.y < waypoint.y ) {
             this.y = this.y + this.speed;
+             } else if (this.y > waypoint.y) {
+                this.y = this.y - this.speed;
             }
             
-        if (this.y === waypoint.y || this.x === waypoint.x) {
-            //I figured that it should be || instead of &&
+        if (this.y === waypoint.y && this.x === waypoint.x && this.waypointIndex <= waypoints3.length - 1) {
             this.waypointIndex++;
             console.log(this.waypointIndex);
         }
-        console.log(this.x);
-    }
     
+    }
+
 }
 
 
 
-const zombie = new Zombie3 (23 * 30, 2 * 24); 
+const zombie = new ZombieThree (2 * 30, 23 * 24); 
 // position: { x: waypoints[0].x, y: waypoints[0].y}
 
 function draw() {

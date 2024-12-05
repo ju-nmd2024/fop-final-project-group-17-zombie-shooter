@@ -1,6 +1,6 @@
-import Zombie from "./zombie";
+import Zombie from "./zombie.js";
 
-class BulletManager {
+export default class BulletManager {
   constructor() {
     this.bullets = []; // Store bullets
   }
@@ -51,6 +51,3 @@ class BulletManager {
     }
   }
 }
-
-const bulletManager = new BulletManager();
-export default bulletManager;
