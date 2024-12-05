@@ -18,45 +18,9 @@ export default class Zombie {
     }
             
     update() {
-        this.y += -0.1;
+        this.y += 0.1;
+        this.x += 1;
     }
-
-
-    // /*
-    // taken from: https://www.youtube.com/watch?v=C4_iRLlPNFc
-    // */    
-    // constructor({position = { x: 0, y: 0 } }) {
-    //     this.position = position;
-    //     this.pathIndex = 0;
-    // }
-    
-    // update() {
-    //     this.draw();
-
-    //     /*
-    // taken from: https://www.youtube.com/watch?v=C4_iRLlPNFc
-    // movement towards waypoint (path points) in array
-    // > pathfinding for zombies
-    // */
-        // const path = paths[this.pathIndex];
-
-        // //movement calculations
-        // const yDistance = path.y - this.position.y;
-        // const xDistance = path.x - this.position.x;
-        // const angle = Math.atan2(yDistance, xDistance);
-        // this.position.x += Math.cos(angle);
-        // this.position.y += Math.sin(angle);
-
-        // //"waypoint(path coordinates)" index change++, so zombie moves to next waypoint
-        // if(
-        //     Math.round(this.position.x) === Math.round(path.x) &&
-        //     Math.round(this.position.y) === Math.round(path.y) &&
-        //     this.pathIndex < path.length - 1 
-        // ) {
-        //     this.pathIndex++;
-        // }
-
-
 
 }
 

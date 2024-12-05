@@ -12,19 +12,19 @@ export default class Player {
       //body
       fill(49, 54, 42);
       // rect(this.x, this.y, 50, 50);
-      ellipse(0, 0, 50);
+      ellipse(0, 0, 35);
       push();
 
       //rifle
       rotate(-0.03);
       fill(33, 33, 32);
-      rect(-5, +10, 70, 10);
+      rect(-5, +3, 50, 10);
       pop();
 
       //head
       fill(77, 51, 33);
       // rect(-5, -10, 25, 25);
-      ellipse(0, 5, 30);
+      ellipse(0, 5, 20);
       pop();
     }
 

@@ -1,3 +1,5 @@
+import Zombie from "./zombie";
+
 class BulletManager {
   constructor() {
     this.bullets = []; // Store bullets
@@ -27,7 +29,11 @@ class BulletManager {
           bullet.x > obstacle.x &&
           bullet.x < obstacle.x + obstacle.w &&
           bullet.y > obstacle.y &&
-          bullet.y < obstacle.y + obstacle.h
+          bullet.y < obstacle.y + obstacle.h // && zombie logic from here on
+          // bullet.x > Zombie.x &&
+          // bullet.x < Zombie.x &&
+          // bullet.y > Zombie.y &&
+          // bullet.y < Zombie.y
           //insert zombie obtsacle logic
         ) {
           this.bullets.splice(i, 1); // Remove bullet on collision

@@ -1,9 +1,9 @@
 import player from "./player.js";
 import bulletManager from "./bulletManager.js";
-import Path from "./path.js";
 import Spawnpoint from "./spawnpoint.js";
-import Position from "./position.js";
+// import Position from "./position.js";
 import Zombie from "./zombie.js";
+
 
 const gridHeight = 24;
 const gridWidth = 30;
@@ -11,66 +11,67 @@ const dx = mouseX - player.x;
 const dy = mouseY - player.y;
 // const angle = atan2(dy, dx);
 
-const path1 = [
-  { x: 7, y: 2 },
-  { x: 7, y: 5 },
-  { x: 12, y: 5 },
-  { x: 12, y: 8 },
-  { x: 10, y: 8 },
-  { x: 8, y: 11 },
-  { x: 8, y: 14 },
-  { x: 11, y: 14 },
-];
+// const path1 = [
+//   { x: 7, y: 2 },
+//   { x: 7, y: 5 },
+//   { x: 12, y: 5 },
+//   { x: 12, y: 8 },
+//   { x: 10, y: 8 },
+//   { x: 8, y: 11 },
+//   { x: 8, y: 14 },
+//   { x: 11, y: 14 },
+// ];
 
 //top left spawnpoint+path
-const spawnpoint1 = new Spawnpoint(2 * gridWidth, 2 * gridHeight, new Path(
-  new Position (7, 2),
-  new Position (7, 5),
-  new Position (12, 5),
-  new Position (12, 8),
-  new Position (10, 8),
-  new Position (10, 11),
-  new Position (8, 11),
-  new Position (8, 14),
-  new Position (11, 14)
-));
+const spawnpoint1 = new Spawnpoint(2 * gridWidth, 2 * gridHeight);
+// const spawnpoint1 = new Spawnpoint(2 * gridWidth, 2 * gridHeight, new Path(
+//   new Position (7, 2),
+//   new Position (7, 5),
+//   new Position (12, 5),
+//   new Position (12, 8),
+//   new Position (10, 8),
+//   new Position (10, 11),
+//   new Position (8, 11),
+//   new Position (8, 14),
+//   new Position (11, 14)
+// ));
 
-const zombie1 = new Zombie(spawnpoint1, 2);
+// const zombie1 = new Zombie(spawnpoint1, 2);
 
-//top right spawnpoint+path
-const spawnpoint2 = new Spawnpoint(23, 2, new Path(
-  new Position (23, 10),
-  new Position (18, 10),
-  new Position (18, 2),
-  new Position (14, 2),
-  new Position (14, 11),
-  new Position (13, 11),
-  new Position (13, 12)
-));
-// bottom left spawnpoint+path
-const spawnpoint3 = new Spawnpoint(2, 23, new Path(
-  new Position (2, 13),
-  new Position (4, 13),
-  new Position (2, 19),
-  new Position (6, 19),
-  new Position (6, 23),
-  new Position (10, 23),
-  new Position (10, 18),
-  new Position (13, 15)
-));
-//bottom right spawnpoint+path
-const spawnpoint4 = new Spawnpoint(23, 23, new Path(
-  new Position (13, 19),
-  new Position (2, 19),
-  new Position (20, 16),
-  new Position (23, 16),
-  new Position (23, 14),
-  new Position (18, 14),
-  new Position (18, 18),
-  new Position (15, 18),
-  new Position (15, 14),
-  new Position (14, 14)
-));
+// // //top right spawnpoint+path
+// const spawnpoint2 = new Spawnpoint(23, 2, new Path(
+//   new Position (23, 10),
+//   new Position (18, 10),
+//   new Position (18, 2),
+//   new Position (14, 2),
+//   new Position (14, 11),
+//   new Position (13, 11),
+//   new Position (13, 12)
+// ));
+// // bottom left spawnpoint+path
+// const spawnpoint3 = new Spawnpoint(2, 23, new Path(
+//   new Position (2, 13),
+//   new Position (4, 13),
+//   new Position (2, 19),
+//   new Position (6, 19),
+//   new Position (6, 23),
+//   new Position (10, 23),
+//   new Position (10, 18),
+//   new Position (13, 15)
+// ));
+// //bottom right spawnpoint+path
+// const spawnpoint4 = new Spawnpoint(23, 23, new Path(
+//   new Position (13, 19),
+//   new Position (2, 19),
+//   new Position (20, 16),
+//   new Position (23, 16),
+//   new Position (23, 14),
+//   new Position (18, 14),
+//   new Position (18, 18),
+//   new Position (15, 18),
+//   new Position (15, 14),
+//   new Position (14, 14)
+// ));
 
 window.preload = preload;
 
@@ -156,24 +157,61 @@ function mousePressed() {
 window.mousePressed = mousePressed;
 // let zombie = new Zombie(100,100);
 
+// //zombie updating?
+// let lastSpawnTime = 0;
+// const spawnInterval = 2000; // Spawn zombies every 2 seconds
+
+// function spawnZombies() {
+//     spawnpoints.forEach((spawnpoint) => {
+//         spawnpoint.spawnZombie(); // Spawn one zombie per spawn point
+//     });
+// }
+
+// function updateZombies() {
+//     spawnpoints.forEach((spawnpoint) => spawnpoint.updateZombies());
+// }
+
+// function drawZombies() {
+//     spawnpoints.forEach((spawnpoint) => spawnpoint.drawZombies());
+// }
+
+//ZOMBIE TRYOUTS
+const zombie = new Zombie(spawnpoint1, 1);
+// const zombie1 = new ZombieOne(10, 10);
+
+
+
 function draw() {
   image(gameMap, 0, 0);
   drawCrosshair();
   drawGrid();
+  zombie.update();
+  zombie.draw();
+
 
   drawObstacles(); // Draw obstacles (visible for testing)
 
 
-  if (spawnpoint1.zombieArray.length === 0) {
-    spawnpoint1.spawnZombie();
-  }
+  // //taken from
+  // const currentTime = millis();
+  // if (currentTime - lastSpawnTime > spawnInterval) {
+  //     spawnZombies();
+  //     lastSpawnTime = currentTime;
+  // }
+
+  // updateZombies();
+  // drawZombies();
+
+  // if (spawnpoint1.zombieArray.length === 0) {
+  //   spawnpoint1.spawnZombie();
+  // }
 
   // from my brother i think, array from spawnpoint one, topleft corner
-  for (i = 0; i < spawnpoint1.zombieArray.length; i++) {
-    let zombie = spawnpoint1.zombieArray[i];
-    zombie.update();
-    zombie.draw();
-    }
+  // for (i = 0; i < spawnpoint1.zombieArray.length; i++) {
+  //   let zombie = spawnpoint1.zombieArray[i];
+  //   zombie.update();
+  //   zombie.draw();
+  //   }
 
   // Update bullets and draw them
   bulletManager.updateBullets();
