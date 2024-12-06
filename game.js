@@ -1,5 +1,6 @@
-// import Player from "./player.js";
+import Player from "./player.js";
 import BulletManager from "./bulletManager.js";
+import Crosshair from "./crosshair.js";
 import Spawnpoint from "./spawnpoint.js";
 import Zombie from "./zombie.js";
 import ZombieTwo from "./zombie2.js";
@@ -9,6 +10,8 @@ import ZombieFour from "./zombie4.js";
 
 const gridHeight = 24;
 const gridWidth = 30;
+let x = 0;
+let y = 0;
 
 let gameMap;
 let startScreen;
@@ -72,12 +75,14 @@ function drawObstacles() {
   }
 }
 
-// function drawCrosshair() {
-//   // Draw a crosshair at the mouse position
-//   stroke(255, 0, 0);
-//   line(mouseX - 10, mouseY, mouseX + 10, mouseY); // Horizontal line
-//   line(mouseX, mouseY - 10, mouseX, mouseY + 10); // Vertical line
-// }
+function drawCrosshair() {
+  // Draw a crosshair at the mouse position
+  push();
+  stroke(255, 0, 0);
+  line(mouseX - 10, mouseY, mouseX + 10, mouseY); // Horizontal line
+  line(mouseX, mouseY - 10, mouseX, mouseY + 10); // Vertical line
+  pop();
+}
 
 function mousePressed() {
   // Calculate the angle between the player and the mouse
@@ -120,8 +125,16 @@ window.mousePressed = mousePressed;
 const zombie = new Zombie(2 * gridWidth, 2 * gridHeight);
 const zombie2 = new ZombieTwo(23 * gridWidth, 2 * gridHeight);
 const zombie3 = new ZombieThree(2 * gridWidth, 23 * gridHeight);
-const zombie4 = new ZombieFour(23 * gridWidth, 23 * gridHeight)
+const zombie4 = new ZombieFour(23 * gridWidth, 23 * gridHeight);
 
+let zombies = [
+  zombie,
+  zombie2,
+  zombie3,
+  zombie4,
+];
+
+const player = new Player(x, y);
 
 function draw() {
   //game setup: background/obstacles, "non interactive"
@@ -129,19 +142,24 @@ function draw() {
   drawGrid();
   drawObstacles(); // Draw obstacles (visible for testing)
   // mousePressed();
+  drawCrosshair();
 
   //game elements: objects/enemies/player etc
     // crosshair.drawCrosshair();
   // crosshair.update();
-  zombie.update();
-  zombie2.update();
-  zombie3.update();
-  zombie4.update();
+  // zombie.update();
+  // zombie2.update();
+  // zombie3.update();
+  // zombie4.update();
+  
+  for (let zombie of zombies) {
+    zombie.update();
+  }
 
   //"physics" > bullet manager etc??
   // Update bullets and draw them
-    // bulletManager.updateBullets();
-    // bulletManager.drawBullets();
+    bulletManager.updateBullets(obstacles, zombies);
+    bulletManager.drawBullets();
 
   // if (spawnpoint1.zombieArray.length === 0) {
   //   spawnpoint1.spawnZombie();
@@ -169,6 +187,23 @@ function draw() {
   // player.draw(a);
   // player.update();
   // pop();
+
+  push();
+
+    // Translate the origin to the center. - how do you make it have the center?
+    translate(370, 400);
+  
+    // Get the mouse's coordinates relative to the origin.
+    x = mouseX - 395;
+    y = mouseY - 400;
+  
+    // Calculate the angle between the mouse and the origin.
+    let aimRotation = atan2(y, x);
+  
+    // Rotate
+    rotate(aimRotation);
+    player.draw(-50, -5);
+  pop();
 
 }
 

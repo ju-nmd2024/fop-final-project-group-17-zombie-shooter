@@ -17,7 +17,7 @@ const waypoints = [
 export default class ZombieTwo {
     constructor(x, y) {
         this.waypointIndex = 0;
-        this.speed = 2;
+        this.speed = 1;
         this.x = x;
         this.y = y;
     }

@@ -19,7 +19,7 @@ const waypoints4 = [
 export default class ZombieFour {
     constructor(x, y) {
         this.waypointIndex = 0;
-        this.speed = 2;
+        this.speed = 1;
         this.x = x;
         this.y = y;
         // this.waypoints = waypoints;
@@ -36,6 +36,8 @@ export default class ZombieFour {
 
         const waypoint = waypoints4[this.waypointIndex];
 
+
+
         if (this.x < waypoint.x ) {
             this.x = this.x + this.speed;
             } else if (this.x > waypoint.x) {
@@ -46,6 +48,12 @@ export default class ZombieFour {
              } else if (this.y > waypoint.y) {
                 this.y = this.y - this.speed;
             }
+            
+            // if (this.waypointIndex >= waypoints.length) {
+            //     console.log("Zombie has reached the end of the path.");
+            //     // Optionally, remove the zombie from the game or stop its movement
+            //     return;
+            // }
             
         if (this.y === waypoint.y && this.x === waypoint.x && this.waypointIndex <= waypoints4.length - 1) {
             this.waypointIndex++;

@@ -1,4 +1,4 @@
-class Crosshair {
+export default class Crosshair {
     constructor(x, y) {
         x = mouseX;
         y = mouseY;
@@ -19,9 +19,9 @@ class Crosshair {
 //when crosshair is not in main game file, it works
 
 
-let crosshair = new Crosshair(mouseX, mouseY);
+// let crosshair = new Crosshair(mouseX, mouseY);
 
-function draw() {
-    clear();
-    crosshair.update();
-}
+// function draw() {
+//     clear();
+//     crosshair.update();
+// }
