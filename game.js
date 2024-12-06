@@ -13,6 +13,8 @@ const gridWidth = 30;
 let x = 0;
 let y = 0;
 
+let gameState = false;
+
 let gameMap;
 let startScreen;
 
@@ -84,6 +86,16 @@ function drawCrosshair() {
   pop();
 }
 
+
+function keyReleased() {
+  if (key === " ") {
+    gameState = true;
+  }
+  // if (keyCode === 13) {
+  //   gameState = true;
+  // }
+}
+
 function mousePressed() {
   // Calculate the angle between the player and the mouse
   const dx = mouseX - 370; // Adjusted based on the translation
@@ -137,7 +149,15 @@ let zombies = [
 const player = new Player(x, y);
 
 function draw() {
-  //game setup: background/obstacles, "non interactive"
+
+  if (gameState === false) {
+    image(startScreen, 0, 0);
+  }
+  
+  keyReleased();
+
+  if (gameState === true) {
+      //game setup: background/obstacles, "non interactive"
   image(gameMap, 0, 0);
   drawGrid();
   drawObstacles(); // Draw obstacles (visible for testing)
@@ -204,6 +224,8 @@ function draw() {
     rotate(aimRotation);
     player.draw(-50, -5);
   pop();
+  }
+
 
 }
 
