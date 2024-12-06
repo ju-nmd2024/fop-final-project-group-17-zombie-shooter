@@ -1,12 +1,10 @@
 import Player from "./player.js";
 import BulletManager from "./bulletManager.js";
-import Crosshair from "./crosshair.js";
 import Spawnpoint from "./spawnpoint.js";
 import Zombie from "./zombie.js";
 import ZombieTwo from "./zombie2.js";
 import ZombieThree from "./zombie3.js";
 import ZombieFour from "./zombie4.js";
-// import Crosshair from "./crosshair.js";
 
 const gridHeight = 24;
 const gridWidth = 30;
@@ -31,9 +29,6 @@ window.setup = setup;
 // const player = new Player(0, 0);
 const bulletManager = new BulletManager();
 // const crosshair = new Crosshair(mouseX, mouseY);
-
-//top left spawnpoint+path
-const spawnpoint1 = new Spawnpoint(2 * gridWidth, 2 * gridHeight);
 
 /*
   grid taken from Garrits lesson; the snake game
@@ -99,33 +94,11 @@ function mousePressed() {
 }
 
 window.mousePressed = mousePressed;
-// let zombie = new Zombie(100,100);
-
-// //zombie updating?
-// let lastSpawnTime = 0;
-// const spawnInterval = 2000; // Spawn zombies every 2 seconds
-
-// function spawnZombies() {
-//     spawnpoints.forEach((spawnpoint) => {
-//         spawnpoint.spawnZombie(); // Spawn one zombie per spawn point
-//     });
-// }
-
-// function updateZombies() {
-//     spawnpoints.forEach((spawnpoint) => spawnpoint.updateZombies());
-// }
-
-// function drawZombies() {
-//     spawnpoints.forEach((spawnpoint) => spawnpoint.drawZombies());
-// }
-
-//waypoints for the zombie path
-
 
 const zombie = new Zombie(2 * gridWidth, 2 * gridHeight);
 const zombie2 = new ZombieTwo(23 * gridWidth, 2 * gridHeight);
-const zombie3 = new ZombieThree(2 * gridWidth, 23 * gridHeight);
-const zombie4 = new ZombieFour(23 * gridWidth, 23 * gridHeight);
+const zombie3 = new ZombieThree(2 * gridWidth, 28 * gridHeight);
+const zombie4 = new ZombieFour(23 * gridWidth, 28 * gridHeight);
 
 let zombies = [
   zombie,
@@ -140,18 +113,10 @@ function draw() {
   //game setup: background/obstacles, "non interactive"
   image(gameMap, 0, 0);
   drawGrid();
-  drawObstacles(); // Draw obstacles (visible for testing)
+  drawObstacles();
   // mousePressed();
   drawCrosshair();
 
-  //game elements: objects/enemies/player etc
-    // crosshair.drawCrosshair();
-  // crosshair.update();
-  // zombie.update();
-  // zombie2.update();
-  // zombie3.update();
-  // zombie4.update();
-  
   for (let zombie of zombies) {
     zombie.update();
   }
@@ -161,35 +126,7 @@ function draw() {
     bulletManager.updateBullets(obstacles, zombies);
     bulletManager.drawBullets();
 
-  // if (spawnpoint1.zombieArray.length === 0) {
-  //   spawnpoint1.spawnZombie();
-  // }
-
-  // from my brother i think, array from spawnpoint one, topleft corner
-  // for (i = 0; i < spawnpoint1.zombieArray.length; i++) {
-  //   let zombie = spawnpoint1.zombieArray[i];
-  //   zombie.update();
-  //   zombie.draw();
-  //   }
-
-  //player stuff from chatGPT
-
-  // push();
-  // // Translate the origin to the center.
-  // translate(370, 400);
-  // // Get the mouse's coordinates relative to the origin.
-  // let x = mouseX - 395;
-  // let y = mouseY - 400;
-  // // Calculate the angle between the mouse and the origin.
-  // let a = atan2(y, x);
-  // // Rotate
-  // rotate(a, a);
-  // player.draw(a);
-  // player.update();
-  // pop();
-
   push();
-
     // Translate the origin to the center. - how do you make it have the center?
     translate(370, 400);
   

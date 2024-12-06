@@ -10,14 +10,14 @@ const waypoints3 = [
     { x: 6 * gridWidth, y: 28 * gridHeight},
     { x: 9 * gridWidth, y: 28 * gridHeight},
     { x: 9* gridWidth, y: 22 * gridHeight},
-    { x: 13 * gridWidth, y: 22 * gridHeight},
-    { x: 13 * gridWidth, y: 19 * gridHeight},
+    { x: 12 * gridWidth, y: 22 * gridHeight},
+    { x: 12 * gridWidth, y: 18 * gridHeight},
 ];
 
 export default class ZombieThree {
     constructor(x, y) {
         this.waypointIndex = 0;
-        this.speed = 2;
+        this.speed = 1;
         this.x = x;
         this.y = y;
         // this.waypoints = waypoints;

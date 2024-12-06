@@ -8,14 +8,14 @@ const waypoints2 = [
     { x: 18 * gridWidth, y: 2 * gridHeight},
     { x: 13 * gridWidth, y: 2 * gridHeight},
     { x: 13 * gridWidth, y: 13 * gridHeight},
-    { x: 14 * gridWidth, y: 13 * gridHeight},
-    { x: 14* gridWidth, y: 15 * gridHeight},
+    { x: 12 * gridWidth, y: 13 * gridHeight},
+    { x: 12* gridWidth, y: 15 * gridHeight},
 ];
 
 export default class ZombieTwo {
     constructor(x, y) {
         this.waypointIndex = 0;
-        this.speed = 2;
+        this.speed = 1;
         this.x = x;
         this.y = y;
         // this.waypoints = waypoints;
