@@ -14,7 +14,7 @@ const waypoints = [
     { x: 11 * gridWidth, y: 17 * gridHeight},
   ]; 
 
-export default class Zombie {
+export default class ZombieTwo {
     constructor(x, y) {
         this.waypointIndex = 0;
         this.speed = 1;
@@ -29,6 +29,7 @@ export default class Zombie {
 
     update() {
         this.draw();
+        // this.y += 0.1;
 
         const waypoint = waypoints[this.waypointIndex];
 

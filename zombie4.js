@@ -4,16 +4,16 @@ let gridHeight = 24;
 
 //bottom right path
 const waypoints4 = [
-  { x: 23 * gridWidth, y: 23 * gridHeight},
-  { x: 20 * gridWidth, y: 23 * gridHeight},
-  { x: 20 * gridWidth, y: 20 * gridHeight},
-  { x: 23 * gridWidth, y: 20 * gridHeight},
-  { x: 23 * gridWidth, y: 17 * gridHeight},
-  { x: 17 * gridWidth, y: 17 * gridHeight},
-  { x: 17 * gridWidth, y: 22 * gridHeight},
-  { x: 15 * gridWidth, y: 22 * gridHeight},
-  { x: 15 * gridWidth, y: 17 * gridHeight},
-  { x: 14 * gridWidth, y: 17 * gridHeight},
+  { x: 23 * gridWidth, y: 19 * gridHeight},
+  { x: 20 * gridWidth, y: 19 * gridHeight},
+  { x: 20 * gridWidth, y: 16 * gridHeight},
+  { x: 23 * gridWidth, y: 16 * gridHeight},
+  { x: 23 * gridWidth, y: 14 * gridHeight},
+  { x: 18 * gridWidth, y: 14 * gridHeight},
+  { x: 18 * gridWidth, y: 18 * gridHeight},
+  { x: 15 * gridWidth, y: 18 * gridHeight},
+  { x: 15 * gridWidth, y: 14 * gridHeight},
+  { x: 14 * gridWidth, y: 14 * gridHeight},
 ];
 
 export default class ZombieFour {
@@ -22,7 +22,7 @@ export default class ZombieFour {
         this.speed = 1;
         this.x = x;
         this.y = y;
-
+        // this.waypoints = waypoints;
     }
 
     draw() {
@@ -32,8 +32,11 @@ export default class ZombieFour {
 
     update() {
         this.draw();
+        // this.y += 0.1;
 
         const waypoint = waypoints4[this.waypointIndex];
+
+
 
         if (this.x < waypoint.x ) {
             this.x = this.x + this.speed;

@@ -1,10 +1,10 @@
 export default class Bullet {
-    constructor(x, y, angle, speed = 10) {
+    constructor(x, y, angle, speed = 15) {
       this.x = x;
       this.y = y;
       this.angle = angle;
       this.speed = speed;
-      this.radius = 15; // Size of the bullet
+      this.radius = 10; // Size of the bullet
     }
   
     update() {
