@@ -124,8 +124,8 @@ window.mousePressed = mousePressed;
 
 const zombie = new Zombie(2 * gridWidth, 2 * gridHeight);
 const zombie2 = new ZombieTwo(23 * gridWidth, 2 * gridHeight);
-const zombie3 = new ZombieThree(2 * gridWidth, 23 * gridHeight);
-const zombie4 = new ZombieFour(23 * gridWidth, 23 * gridHeight);
+const zombie3 = new ZombieThree(2 * gridWidth, 28 * gridHeight);
+const zombie4 = new ZombieFour(23 * gridWidth, 28 * gridHeight);
 
 let zombies = [
   zombie,
