@@ -42,7 +42,7 @@ const spawnpoint1 = new Spawnpoint(2 * gridWidth, 2 * gridHeight);
 */
 function drawGrid() {
   push();
-  stroke(255, 255, 255, 50);
+  stroke(255, 255, 255, 0);
   noFill();
   for (let x = 0; x < gridHeight; x++) {
     for (let y = 0; y < gridHeight; y++) {
@@ -88,12 +88,12 @@ function drawCrosshair() {
 
 
 function keyReleased() {
-  if (key === " ") {
-    gameState = true;
+  if (gameState === false) {
+    if (key === " ") {
+      gameState = true;
+      console.log("does it work?")
+    }
   }
-  // if (keyCode === 13) {
-  //   gameState = true;
-  // }
 }
 
 function mousePressed() {
@@ -111,27 +111,6 @@ function mousePressed() {
 }
 
 window.mousePressed = mousePressed;
-// let zombie = new Zombie(100,100);
-
-// //zombie updating?
-// let lastSpawnTime = 0;
-// const spawnInterval = 2000; // Spawn zombies every 2 seconds
-
-// function spawnZombies() {
-//     spawnpoints.forEach((spawnpoint) => {
-//         spawnpoint.spawnZombie(); // Spawn one zombie per spawn point
-//     });
-// }
-
-// function updateZombies() {
-//     spawnpoints.forEach((spawnpoint) => spawnpoint.updateZombies());
-// }
-
-// function drawZombies() {
-//     spawnpoints.forEach((spawnpoint) => spawnpoint.drawZombies());
-// }
-
-//waypoints for the zombie path
 
 
 const zombie = new Zombie(2 * gridWidth, 2 * gridHeight);
@@ -150,10 +129,7 @@ const player = new Player(x, y);
 
 function draw() {
 
-  if (gameState === false) {
-    image(startScreen, 0, 0);
-  }
-  
+  image(startScreen, 0, 0);
   keyReleased();
 
   if (gameState === true) {
@@ -164,14 +140,6 @@ function draw() {
   // mousePressed();
   drawCrosshair();
 
-  //game elements: objects/enemies/player etc
-    // crosshair.drawCrosshair();
-  // crosshair.update();
-  // zombie.update();
-  // zombie2.update();
-  // zombie3.update();
-  // zombie4.update();
-  
   for (let zombie of zombies) {
     zombie.update();
   }
@@ -180,33 +148,6 @@ function draw() {
   // Update bullets and draw them
     bulletManager.updateBullets(obstacles, zombies);
     bulletManager.drawBullets();
-
-  // if (spawnpoint1.zombieArray.length === 0) {
-  //   spawnpoint1.spawnZombie();
-  // }
-
-  // from my brother i think, array from spawnpoint one, topleft corner
-  // for (i = 0; i < spawnpoint1.zombieArray.length; i++) {
-  //   let zombie = spawnpoint1.zombieArray[i];
-  //   zombie.update();
-  //   zombie.draw();
-  //   }
-
-  //player stuff from chatGPT
-
-  // push();
-  // // Translate the origin to the center.
-  // translate(370, 400);
-  // // Get the mouse's coordinates relative to the origin.
-  // let x = mouseX - 395;
-  // let y = mouseY - 400;
-  // // Calculate the angle between the mouse and the origin.
-  // let a = atan2(y, x);
-  // // Rotate
-  // rotate(a, a);
-  // player.draw(a);
-  // player.update();
-  // pop();
 
   push();
 
@@ -224,8 +165,32 @@ function draw() {
     rotate(aimRotation);
     player.draw(-50, -5);
   pop();
+
+  if (zombie.x === 330 && zombie.y === 408) {
+    gameState = false;
+    console.log("the first zombie ate you!")
   }
 
+  if (zombie2.x === 330 && zombie2.y === 408) {
+    gameState = false;
+    console.log("the second zombie ate you!")
+  }
+
+  if (zombie3.x === 330 && zombie3.y === 408) {
+    gameState = false;
+    console.log("the third zombie ate you!")
+  }
+
+  if (zombie4.x === 330 && zombie4.y === 408) {
+    gameState = false;
+    console.log("the fourth zombie ate you!")
+  }
+
+  }
+
+
+
+  console.log(gameState);
 
 }
 

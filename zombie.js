@@ -20,6 +20,7 @@ export default class Zombie {
         this.speed = 1;
         this.x = x;
         this.y = y;
+        this.isAlive = true;
     }
 
     draw() {
@@ -46,8 +47,13 @@ export default class Zombie {
             
         if (this.y === waypoint.y && this.x === waypoint.x && this.waypointIndex < waypoints.length - 1) {
             this.waypointIndex++;
-            console.log(this.waypointIndex);
+            console.log(`Reached waypoint ${this.waypointIndex}`);
         }
+        console.log("x =" + this.x);
+        console.log(this.y);
+
+
+
     
     }
 
