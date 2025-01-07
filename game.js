@@ -86,6 +86,21 @@ function drawCrosshair() {
   pop();
 }
 
+function youDied() {
+  push();
+  fill(255);
+  textSize(50);
+  text('You Died', 250, 180, 300, 200);
+  pop();
+}
+
+function replay() {
+  push();
+  fill(255);
+  textSize(15);
+  text('press spacebar to replay', 300, 600, 300, 200);
+  pop();
+}
 
 function keyReleased() {
   if (gameState === false) {
@@ -112,7 +127,6 @@ function mousePressed() {
 
 window.mousePressed = mousePressed;
 
-
 const zombie = new Zombie(2 * gridWidth, 2 * gridHeight);
 const zombie2 = new ZombieTwo(23 * gridWidth, 2 * gridHeight);
 const zombie3 = new ZombieThree(2 * gridWidth, 28 * gridHeight);
@@ -128,7 +142,6 @@ let zombies = [
 const player = new Player(x, y);
 
 function draw() {
-
   image(startScreen, 0, 0);
   keyReleased();
 
@@ -150,7 +163,6 @@ function draw() {
     bulletManager.drawBullets();
 
   push();
-
     // Translate the origin to the center. - how do you make it have the center?
     translate(370, 400);
   
@@ -165,30 +177,38 @@ function draw() {
     rotate(aimRotation);
     player.draw(-50, -5);
   pop();
+  }
 
+  //zombie finishes the path and kills the player, game ends - game end screen display
   if (zombie.x === 330 && zombie.y === 408) {
     gameState = false;
-    console.log("the first zombie ate you!")
+    console.log("the first zombie ate you!");
+    youDied();
+    replay();
   }
 
-  if (zombie2.x === 330 && zombie2.y === 408) {
+  if (zombie2.x === 360 && zombie2.y === 360) {
     gameState = false;
-    console.log("the second zombie ate you!")
+    console.log("the second zombie ate you!");
+    youDied();
+    replay();
   }
 
-  if (zombie3.x === 330 && zombie3.y === 408) {
+  if (zombie3.x === 360 && zombie3.y === 432) {
     gameState = false;
-    console.log("the third zombie ate you!")
+    console.log("the third zombie ate you!");
+    youDied();
+    replay();
   }
 
-  if (zombie4.x === 330 && zombie4.y === 408) {
+  if (zombie4.x === 420 && zombie4.y === 408) {
     gameState = false;
-    console.log("the fourth zombie ate you!")
+    console.log("the fourth zombie ate you!");
+    youDied();
+    replay();
   }
-
-  }
-
-
+  
+  keyReleased();
 
   console.log(gameState);
 

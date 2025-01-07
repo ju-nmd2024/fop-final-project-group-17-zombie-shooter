@@ -30,7 +30,6 @@ export default class ZombieThree {
 
     update() {
         this.draw();
-        // this.y += 0.1;
 
         const waypoint = waypoints3[this.waypointIndex];
 

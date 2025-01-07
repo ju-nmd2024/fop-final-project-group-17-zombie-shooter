@@ -32,11 +32,8 @@ export default class ZombieFour {
 
     update() {
         this.draw();
-        // this.y += 0.1;
 
         const waypoint = waypoints4[this.waypointIndex];
-
-
 
         if (this.x < waypoint.x ) {
             this.x = this.x + this.speed;

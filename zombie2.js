@@ -28,7 +28,6 @@ export default class ZombieTwo {
 
     update() {
         this.draw();
-        // this.y += 0.1;
 
         const waypoint = waypoints2[this.waypointIndex];
 

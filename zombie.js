@@ -17,7 +17,7 @@ const waypoints = [
 export default class Zombie {
     constructor(x, y) {
         this.waypointIndex = 0;
-        this.speed = 1;
+        this.speed = 3;
         this.x = x;
         this.y = y;
         this.isAlive = true;
@@ -52,9 +52,6 @@ export default class Zombie {
         console.log("x =" + this.x);
         console.log(this.y);
 
-
-
-    
     }
 
 }
