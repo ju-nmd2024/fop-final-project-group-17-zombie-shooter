@@ -1,41 +1,218 @@
 import Player from "./player.js";
 import BulletManager from "./bulletManager.js";
-import Crosshair from "./crosshair.js";
 import Spawnpoint from "./spawnpoint.js";
 import Zombie from "./zombie.js";
-import ZombieTwo from "./zombie2.js";
-import ZombieThree from "./zombie3.js";
-import ZombieFour from "./zombie4.js";
-// import Crosshair from "./crosshair.js";
+import State from "./state.js";
 
 const gridHeight = 24;
 const gridWidth = 30;
 let x = 0;
 let y = 0;
 
-let gameState = false;
+let gameState = "start";
+let gameStates = new Map();
+let graphics = new Map();
+  /**
+   *  @type {Map<string, Zombie>}
+   */
+  let zombieTypes = new Map();
+  
 
-let gameMap;
-let startScreen;
+let zombies = [];
 
-function preload () {
-  gameMap = loadImage ("map.png");
-  startScreen = loadImage ("startscreen720space.png");
+let maxZombies = 20;
+let zombieCount = 0;
+let spawnProbability = 300;
+
+let graphicsSource = {
+  gameMap: "map.png",
+  youDied: "youdied.png",
+  youWon: "youwon.png",
+  startScreen: "startscreen720space.png"
 }
-window.preload = preload;
 
 function setup() {
   createCanvas(720, 720);
+  Object.entries(graphicsSource).forEach((source) => {
+    graphics.set(source[0], loadImage(source[1]))
+  })
+  console.log(graphics);
+    
+  gameStates.set(
+    "start",
+    new State(() => {
+
+    }, graphics.get("startScreen"))
+  )
+  
+  gameStates.set(
+    "game",
+    new State(() => {
+      console.log("meow")
+          //game setup: background/obstacles, "non interactive"
+      drawGrid();
+      drawObstacles(); // Draw obstacles (visible for testing)
+      // mousePressed();
+      drawCrosshair();
+  
+      zombies.forEach((zombie) => {
+        zombie.update();
+      })
+  
+      //"physics" > bullet manager etc??
+      // Update bullets and draw them
+        bulletManager.updateBullets(obstacles, zombies);
+        bulletManager.drawBullets();
+  
+      push();
+        // Translate the origin to the center. - how do you make it have the center?
+        translate(370, 400);
+      
+        // Get the mouse's coordinates relative to the origin.
+        x = mouseX - 395;
+        y = mouseY - 400;
+      
+        // Calculate the angle between the mouse and the origin.
+        let aimRotation = atan2(y, x);
+      
+        // Rotate
+        rotate(aimRotation);
+        player.draw(-50, -5);
+      pop();
+      
+  
+      zombies.forEach((zombie) => {
+        //console.log(zombie);
+        //zombie finishes the path and kills the player, game ends - game end screen display
+        if (zombie.x === zombie.endpoints.x && zombie.y === zombie.endpoints.y) {
+          gameState = "died";
+          lose();
+          //replay();
+        }
+      })
+    }, graphics.get("gameMap"))
+  )
+  
+  gameStates.set(
+    "won",
+    new State(() => {
+      
+    }, graphics.get("youWon"))
+  )
+  
+  gameStates.set(
+    "died",
+    new State(() => {
+      
+    }, graphics.get("youDied"))
+  )
+  
+  
+  zombieTypes.set(
+    1,
+    new Zombie(2 * gridWidth, 2 * gridHeight, 0, 3,
+      [
+        { x: 7 * gridWidth, y: 2 * gridHeight},
+        { x: 7 * gridWidth, y: 6 * gridHeight},
+        { x: 12 * gridWidth, y: 6 * gridHeight},
+        { x: 12 * gridWidth, y: 9 * gridHeight},
+        { x: 10 * gridWidth, y: 9 * gridHeight},
+        { x: 10 * gridWidth, y: 13 * gridHeight},
+        { x: 7* gridWidth, y: 13 * gridHeight},
+        { x: 7 * gridWidth, y: 17 * gridHeight},
+        { x: 11 * gridWidth, y: 17 * gridHeight},
+      ],
+      {
+        x: 330,
+        y: 408
+      }
+    )
+  )
+  
+  zombieTypes.set(
+    2,
+    new Zombie(23 * gridWidth, 2 * gridHeight, 0, 2,
+      [
+        { x: 23 * gridWidth, y: 11 * gridHeight},
+        { x: 18 * gridWidth, y: 11 * gridHeight},
+        { x: 18 * gridWidth, y: 2 * gridHeight},
+        { x: 13 * gridWidth, y: 2 * gridHeight},
+        { x: 13 * gridWidth, y: 13 * gridHeight},
+        { x: 12 * gridWidth, y: 13 * gridHeight},
+        { x: 12* gridWidth, y: 15 * gridHeight},
+      ],
+      {
+        x: 360,
+        y: 360
+      }
+    )
+  )
+  
+  zombieTypes.set(
+    3,
+    new Zombie(2 * gridWidth, 28 * gridHeight, 0, 1,
+      [
+        { x: 2 * gridWidth, y: 15 * gridHeight},
+        { x: 4 * gridWidth, y: 15 * gridHeight},
+        { x: 4 * gridWidth, y: 23 * gridHeight},
+        { x: 6 * gridWidth, y: 23 * gridHeight},
+        { x: 6 * gridWidth, y: 28 * gridHeight},
+        { x: 9 * gridWidth, y: 28 * gridHeight},
+        { x: 9* gridWidth, y: 22 * gridHeight},
+        { x: 12 * gridWidth, y: 22 * gridHeight},
+        { x: 12 * gridWidth, y: 18 * gridHeight},
+      ],
+      {
+        x: 360,
+        y: 432
+      }
+    )
+  )
+  
+  zombieTypes.set(
+    4,
+    new Zombie(23 * gridWidth, 28 * gridHeight, 0, 1,
+      [
+        { x: 23 * gridWidth, y: 23 * gridHeight},
+        { x: 20 * gridWidth, y: 23 * gridHeight},
+        { x: 20 * gridWidth, y: 20 * gridHeight},
+        { x: 23 * gridWidth, y: 20 * gridHeight},
+        { x: 23 * gridWidth, y: 17 * gridHeight},
+        { x: 17 * gridWidth, y: 17 * gridHeight},
+        { x: 17 * gridWidth, y: 22 * gridHeight},
+        { x: 15 * gridWidth, y: 22 * gridHeight},
+        { x: 15 * gridWidth, y: 17 * gridHeight},
+        { x: 14 * gridWidth, y: 17 * gridHeight},
+      ],
+      {
+        x: 420,
+        y: 408
+      }
+    )
+  )
+  
+  zombieTypes.forEach((zombie, i) => {
+    zombies.push(zombie);
+  })
+  console.log("cicaaaaaa");
+  zombies.forEach((zombie) => {
+    console.log(zombie);
+  })
 }
+
+
+function preload () {
+  
+}
+window.preload = preload;
+
+
 
 window.setup = setup;
 
 // const player = new Player(0, 0);
 const bulletManager = new BulletManager();
 // const crosshair = new Crosshair(mouseX, mouseY);
-
-//top left spawnpoint+path
-const spawnpoint1 = new Spawnpoint(2 * gridWidth, 2 * gridHeight);
 
 /*
   grid taken from Garrits lesson; the snake game
@@ -86,7 +263,7 @@ function drawCrosshair() {
   pop();
 }
 
-function youDied() {
+function lose() {
   push();
   fill(255);
   textSize(50);
@@ -102,12 +279,27 @@ function replay() {
   pop();
 }
 
-function keyReleased() {
-  if (gameState === false) {
-    if (key === " ") {
-      gameState = true;
-      console.log("does it work?")
+function randomRange(min, max, whole = false) {
+  let num = Math.random() * (max - min) + min;
+  return whole ? Math.round(num) : num;
+}
+
+randomRange(10, 30)
+
+function keyPressed() {
+  console.log("yeyyyy")
+  if (key === " ") {
+    console.log(gameState)
+    switch (gameState) {
+      case "start":
+      case "died":
+      case "won":
+        gameState = "game";
+        break
+
     }
+    console.log(gameState)
+    console.log("does it work?")
   }
 }
 
@@ -126,92 +318,20 @@ function mousePressed() {
 }
 
 window.mousePressed = mousePressed;
+window.keyPressed = keyPressed;
 
-const zombie = new Zombie(2 * gridWidth, 2 * gridHeight);
-const zombie2 = new ZombieTwo(23 * gridWidth, 2 * gridHeight);
-const zombie3 = new ZombieThree(2 * gridWidth, 28 * gridHeight);
-const zombie4 = new ZombieFour(23 * gridWidth, 28 * gridHeight);
-
-let zombies = [
-  zombie,
-  zombie2,
-  zombie3,
-  zombie4,
-];
+//zombie classes array, nrGenfor spawning
+//checking if all the class arrays are empty you win
+//for loop/while loop
 
 const player = new Player(x, y);
 
 function draw() {
-  image(startScreen, 0, 0);
-  keyReleased();
-
-  if (gameState === true) {
-      //game setup: background/obstacles, "non interactive"
-  image(gameMap, 0, 0);
-  drawGrid();
-  drawObstacles(); // Draw obstacles (visible for testing)
-  // mousePressed();
-  drawCrosshair();
-
-  for (let zombie of zombies) {
-    zombie.update();
-  }
-
-  //"physics" > bullet manager etc??
-  // Update bullets and draw them
-    bulletManager.updateBullets(obstacles, zombies);
-    bulletManager.drawBullets();
-
-  push();
-    // Translate the origin to the center. - how do you make it have the center?
-    translate(370, 400);
-  
-    // Get the mouse's coordinates relative to the origin.
-    x = mouseX - 395;
-    y = mouseY - 400;
-  
-    // Calculate the angle between the mouse and the origin.
-    let aimRotation = atan2(y, x);
-  
-    // Rotate
-    rotate(aimRotation);
-    player.draw(-50, -5);
-  pop();
-  }
-
-  //zombie finishes the path and kills the player, game ends - game end screen display
-  if (zombie.x === 330 && zombie.y === 408) {
-    gameState = false;
-    console.log("the first zombie ate you!");
-    youDied();
-    replay();
-  }
-
-  if (zombie2.x === 360 && zombie2.y === 360) {
-    gameState = false;
-    console.log("the second zombie ate you!");
-    youDied();
-    replay();
-  }
-
-  if (zombie3.x === 360 && zombie3.y === 432) {
-    gameState = false;
-    console.log("the third zombie ate you!");
-    youDied();
-    replay();
-  }
-
-  if (zombie4.x === 420 && zombie4.y === 408) {
-    gameState = false;
-    console.log("the fourth zombie ate you!");
-    youDied();
-    replay();
-  }
-  
-  keyReleased();
-
-  console.log(gameState);
+  clear();
+  gameStates.get(gameState).run();
+  //console.log(gameState);
 
 }
 
 window.draw = draw;
+

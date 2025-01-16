@@ -1,26 +1,20 @@
-let gridWidth = 30;
-let gridHeight = 24;
-
-
-const waypoints = [
-    { x: 7 * gridWidth, y: 2 * gridHeight},
-    { x: 7 * gridWidth, y: 6 * gridHeight},
-    { x: 12 * gridWidth, y: 6 * gridHeight},
-    { x: 12 * gridWidth, y: 9 * gridHeight},
-    { x: 10 * gridWidth, y: 9 * gridHeight},
-    { x: 10 * gridWidth, y: 13 * gridHeight},
-    { x: 7* gridWidth, y: 13 * gridHeight},
-    { x: 7 * gridWidth, y: 17 * gridHeight},
-    { x: 11 * gridWidth, y: 17 * gridHeight},
-  ]; 
-
 export default class Zombie {
-    constructor(x, y) {
-        this.waypointIndex = 0;
-        this.speed = 3;
+    constructor(x, y, waypointIndex, speed, waypoints, endpoints) {
+        this.waypointIndex = waypointIndex;
+        this.speed = speed;
+        this.base = {
+            x: x,
+            y: y
+        }
         this.x = x;
         this.y = y;
-        this.isAlive = true;
+        this.waypoints = waypoints;
+        this.endpoints = endpoints;
+    }
+
+    reset() {
+        this.x = this.base.x;
+        this.y = this.base.y;
     }
 
     draw() {
@@ -32,7 +26,7 @@ export default class Zombie {
         this.draw();
         // this.y += 0.1;
 
-        const waypoint = waypoints[this.waypointIndex];
+        const waypoint = this.waypoints[this.waypointIndex];
 
         if (this.x < waypoint.x ) {
             this.x = this.x + this.speed;
@@ -45,7 +39,7 @@ export default class Zombie {
                 this.y = this.y - this.speed;
             }
             
-        if (this.y === waypoint.y && this.x === waypoint.x && this.waypointIndex < waypoints.length - 1) {
+        if (this.y === waypoint.y && this.x === waypoint.x && this.waypointIndex < this.waypoints.length - 1) {
             this.waypointIndex++;
             console.log(`Reached waypoint ${this.waypointIndex}`);
         }

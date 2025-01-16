@@ -29,26 +29,28 @@ export default class Player {
 
   }    
 
-let player = new Player(-25, -25);
-// let playerX = player.x;
-// let playerY = player.y;
+//THIS CAN BE REMOVED
 
-function draw() {
-  player.draw();
+// let player = new Player(-25, -25);
+// // let playerX = player.x;
+// // let playerY = player.y;
 
-  clear();
+// function draw() {
+//   player.draw();
 
-    // Translate the origin to the center. - how do you make it have the center?
-    translate(275, 250);
+//   clear();
+
+//     // Translate the origin to the center. - how do you make it have the center?
+//     translate(275, 250);
   
-    // Get the mouse's coordinates relative to the origin.
-    x = mouseX - 275;
-    y = mouseY - 250;
+//     // Get the mouse's coordinates relative to the origin.
+//     x = mouseX - 275;
+//     y = mouseY - 250;
   
-    // Calculate the angle between the mouse and the origin.
-    let aimRotation = atan2(y, x);
+//     // Calculate the angle between the mouse and the origin.
+//     let aimRotation = atan2(y, x);
   
-    // Rotate
-    rotate(aimRotation);
-    player.draw(-50, -5 );
-}
+//     // Rotate
+//     rotate(aimRotation);
+//     player.draw(-50, -5 );
+// }
