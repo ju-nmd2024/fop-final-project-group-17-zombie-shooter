@@ -20,7 +20,7 @@ let startScreen;
 
 function preload () {
   gameMap = loadImage ("map.png");
-  startScreen = loadImage ("startscreen.png");
+  startScreen = loadImage ("startscreen720space.png");
 }
 window.preload = preload;
 
