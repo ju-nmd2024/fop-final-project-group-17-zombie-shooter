@@ -12,203 +12,319 @@ let y = 0;
 let gameState = "start";
 let gameStates = new Map();
 let graphics = new Map();
-  /**
-   *  @type {Map<string, Zombie>}
-   */
-  let zombieTypes = new Map();
-  
+/**
+ *  @type {Map<string, Zombie>}
+ */
+let zombieTypes = new Map();
 
 let zombies = [];
 
-let maxZombies = 20;
-let zombieCount = 0;
-let spawnProbability = 300;
+let score;
+let highscore;
+let spawnRarity = 5;
+
+let generationWait = 30;
+
+let generationElapsed;
+let isWaiting;
+
+let scorePerKill = 5;
 
 let graphicsSource = {
   gameMap: "map.png",
-  youDied: "youdied.png",
-  youWon: "youwon.png",
-  startScreen: "startscreen720space.png"
-}
+  blurryMap: "blurrymap.png",
+};
 
 function setup() {
   createCanvas(720, 720);
   Object.entries(graphicsSource).forEach((source) => {
-    graphics.set(source[0], loadImage(source[1]))
-  })
-  console.log(graphics);
-    
+    graphics.set(source[0], loadImage(source[1]));
+  });
+  //console.log(graphics);
+
+  highscore = getItem("high score");
+
   gameStates.set(
     "start",
     new State(() => {
+      push();
+      fill(255);
+      stroke(0, 0, 0);
+      strokeWeight(4);
+      textSize(100);
+      textFont("Melted Monster");
+      textAlign("center", "center");
+      shadowedText("Undead Grid", width / 2, 200, 0, 10, 255);
+      pop();
+      push();
+      fill(255);
+      stroke(0, 0, 0);
+      strokeWeight(1);
+      textSize(20);
+      textFont("Milky Nice Clean");
+      textAlign("center", "center");
+      shadowedText(
+        "Use your mouse and kill all the zombies before they kill you",
+        width / 2,
+        300,
+        0,
+        5,
+        255
+      );
+      pop();
+      push();
+      fill(255);
+      stroke(0, 0, 0);
+      strokeWeight(3);
+      textSize(50);
+      textFont("Milky Nice Clean");
+      textAlign("center", "center");
+      shadowedText("Press spacebar to start", width / 2, 600, 0, 7.5, 255);
+      pop();
+    }, graphics.get("blurryMap"))
+  );
 
-    }, graphics.get("startScreen"))
-  )
-  
   gameStates.set(
     "game",
     new State(() => {
-      console.log("meow")
-          //game setup: background/obstacles, "non interactive"
+      //console.log(isWaiting);
+      console.log(zombies);
+
+      if (isWaiting) {
+        //console.log(`${generationElapsed}\\${generationWait}`);
+        generationElapsed++;
+        if (generationWait === generationElapsed) {
+          isWaiting = false;
+        }
+      } else {
+        console.log("mókus");
+        let rand = randomRange(1, spawnRarity, true);
+        console.log(rand);
+        if (rand === 1) {
+          console.log("zglgbkgj");
+          generateZombie(
+            deepCopy(zombieTypes.get(randomRange(1, 4, true)).reset())
+          );
+          zombies[zombies.length - 1].speed = randomRange(1, 3, true);
+        }
+        isWaiting = true;
+        generationElapsed = 0;
+      }
+
+      //game setup: background/obstacles, "non interactive"
       drawGrid();
       drawObstacles(); // Draw obstacles (visible for testing)
       // mousePressed();
       drawCrosshair();
-  
+
       zombies.forEach((zombie) => {
         zombie.update();
-      })
-  
+      });
+
       //"physics" > bullet manager etc??
       // Update bullets and draw them
-        bulletManager.updateBullets(obstacles, zombies);
-        bulletManager.drawBullets();
-  
+      let killedZombie = bulletManager.updateBullets(obstacles, zombies);
+      bulletManager.drawBullets();
+
+      if (killedZombie) {
+        score += scorePerKill + killedZombie.speed;
+      }
+
       push();
-        // Translate the origin to the center. - how do you make it have the center?
-        translate(370, 400);
-      
-        // Get the mouse's coordinates relative to the origin.
-        x = mouseX - 395;
-        y = mouseY - 400;
-      
-        // Calculate the angle between the mouse and the origin.
-        let aimRotation = atan2(y, x);
-      
-        // Rotate
-        rotate(aimRotation);
-        player.draw(-50, -5);
+      // Translate the origin to the center. - how do you make it have the center?
+      translate(370, 400);
+
+      // Get the mouse's coordinates relative to the origin.
+      x = mouseX - 395;
+      y = mouseY - 400;
+
+      // Calculate the angle between the mouse and the origin.
+      let aimRotation = atan2(y, x);
+
+      // Rotate
+      rotate(aimRotation);
+      player.draw(-50, -5);
       pop();
-      
-  
+
       zombies.forEach((zombie) => {
         //console.log(zombie);
         //zombie finishes the path and kills the player, game ends - game end screen display
-        if (zombie.x === zombie.endpoints.x && zombie.y === zombie.endpoints.y) {
-          gameState = "died";
+        if (
+          zombie.x === zombie.endpoints.x &&
+          zombie.y === zombie.endpoints.y
+        ) {
+          gameState = "gameover";
           lose();
+          return;
           //replay();
         }
-      })
+      });
     }, graphics.get("gameMap"))
-  )
-  
+  );
+
   gameStates.set(
-    "won",
+    "gameover",
     new State(() => {
-      
-    }, graphics.get("youWon"))
-  )
-  
-  gameStates.set(
-    "died",
-    new State(() => {
-      
-    }, graphics.get("youDied"))
-  )
-  
-  
+      push();
+      fill(255);
+      stroke(0, 0, 0);
+      strokeWeight(4);
+      textSize(100);
+      textFont("Melted Monster");
+      textAlign("center", "center");
+      shadowedText("Game Over", width / 2, 200, 0, 10, 255);
+      pop();
+      push();
+      fill(255);
+      stroke(0, 0, 0);
+      strokeWeight(3);
+      textSize(50);
+      textFont("Milky Nice Clean");
+      textAlign("center", "center");
+      shadowedText("Score", width / 2, 300, 0, 5, 255);
+      pop();
+      push();
+      fill(255);
+      stroke(0, 0, 0);
+      strokeWeight(2);
+      textSize(35);
+      textFont("Milky Nice Clean");
+      textAlign("center", "center");
+      shadowedText(score, width / 2, 350, 0, 5, 255);
+      pop();
+      push();
+      fill(255);
+      stroke(0, 0, 0);
+      strokeWeight(3);
+      textSize(50);
+      textFont("Milky Nice Clean");
+      textAlign("center", "center");
+      shadowedText("High Score", width / 2, 450, 0, 5, 255);
+      pop();
+      push();
+      fill(255);
+      stroke(0, 0, 0);
+      strokeWeight(2);
+      textSize(35);
+      textFont("Milky Nice Clean");
+      textAlign("center", "center");
+      shadowedText(highscore, width / 2, 500, 0, 5, 255);
+      pop();
+      push();
+      fill(255);
+      stroke(0, 0, 0);
+      strokeWeight(3);
+      textSize(50);
+      textFont("Milky Nice Clean");
+      textAlign("center", "center");
+      shadowedText("Press spacebar to restart", width / 2, 600, 0, 7.5, 255);
+      pop();
+    }, graphics.get("blurryMap"))
+  );
+
   zombieTypes.set(
     1,
-    new Zombie(2 * gridWidth, 2 * gridHeight, 0, 3,
+    new Zombie(
+      2 * gridWidth,
+      2 * gridHeight,
+      0,
+      1,
       [
-        { x: 7 * gridWidth, y: 2 * gridHeight},
-        { x: 7 * gridWidth, y: 6 * gridHeight},
-        { x: 12 * gridWidth, y: 6 * gridHeight},
-        { x: 12 * gridWidth, y: 9 * gridHeight},
-        { x: 10 * gridWidth, y: 9 * gridHeight},
-        { x: 10 * gridWidth, y: 13 * gridHeight},
-        { x: 7* gridWidth, y: 13 * gridHeight},
-        { x: 7 * gridWidth, y: 17 * gridHeight},
-        { x: 11 * gridWidth, y: 17 * gridHeight},
+        { x: 7 * gridWidth, y: 2 * gridHeight },
+        { x: 7 * gridWidth, y: 6 * gridHeight },
+        { x: 12 * gridWidth, y: 6 * gridHeight },
+        { x: 12 * gridWidth, y: 9 * gridHeight },
+        { x: 10 * gridWidth, y: 9 * gridHeight },
+        { x: 10 * gridWidth, y: 13 * gridHeight },
+        { x: 7 * gridWidth, y: 13 * gridHeight },
+        { x: 7 * gridWidth, y: 17 * gridHeight },
+        { x: 11 * gridWidth, y: 17 * gridHeight },
       ],
       {
         x: 330,
-        y: 408
+        y: 408,
       }
     )
-  )
-  
+  );
+
   zombieTypes.set(
     2,
-    new Zombie(23 * gridWidth, 2 * gridHeight, 0, 2,
+    new Zombie(
+      23 * gridWidth,
+      2 * gridHeight,
+      0,
+      1,
       [
-        { x: 23 * gridWidth, y: 11 * gridHeight},
-        { x: 18 * gridWidth, y: 11 * gridHeight},
-        { x: 18 * gridWidth, y: 2 * gridHeight},
-        { x: 13 * gridWidth, y: 2 * gridHeight},
-        { x: 13 * gridWidth, y: 13 * gridHeight},
-        { x: 12 * gridWidth, y: 13 * gridHeight},
-        { x: 12* gridWidth, y: 15 * gridHeight},
+        { x: 23 * gridWidth, y: 11 * gridHeight },
+        { x: 18 * gridWidth, y: 11 * gridHeight },
+        { x: 18 * gridWidth, y: 2 * gridHeight },
+        { x: 13 * gridWidth, y: 2 * gridHeight },
+        { x: 13 * gridWidth, y: 13 * gridHeight },
+        { x: 12 * gridWidth, y: 13 * gridHeight },
+        { x: 12 * gridWidth, y: 15 * gridHeight },
       ],
       {
         x: 360,
-        y: 360
+        y: 360,
       }
     )
-  )
-  
+  );
+
   zombieTypes.set(
     3,
-    new Zombie(2 * gridWidth, 28 * gridHeight, 0, 1,
+    new Zombie(
+      2 * gridWidth,
+      28 * gridHeight,
+      0,
+      1,
       [
-        { x: 2 * gridWidth, y: 15 * gridHeight},
-        { x: 4 * gridWidth, y: 15 * gridHeight},
-        { x: 4 * gridWidth, y: 23 * gridHeight},
-        { x: 6 * gridWidth, y: 23 * gridHeight},
-        { x: 6 * gridWidth, y: 28 * gridHeight},
-        { x: 9 * gridWidth, y: 28 * gridHeight},
-        { x: 9* gridWidth, y: 22 * gridHeight},
-        { x: 12 * gridWidth, y: 22 * gridHeight},
-        { x: 12 * gridWidth, y: 18 * gridHeight},
+        { x: 2 * gridWidth, y: 15 * gridHeight },
+        { x: 4 * gridWidth, y: 15 * gridHeight },
+        { x: 4 * gridWidth, y: 23 * gridHeight },
+        { x: 6 * gridWidth, y: 23 * gridHeight },
+        { x: 6 * gridWidth, y: 28 * gridHeight },
+        { x: 9 * gridWidth, y: 28 * gridHeight },
+        { x: 9 * gridWidth, y: 22 * gridHeight },
+        { x: 12 * gridWidth, y: 22 * gridHeight },
+        { x: 12 * gridWidth, y: 18 * gridHeight },
       ],
       {
         x: 360,
-        y: 432
+        y: 432,
       }
     )
-  )
-  
+  );
+
   zombieTypes.set(
     4,
-    new Zombie(23 * gridWidth, 28 * gridHeight, 0, 1,
+    new Zombie(
+      23 * gridWidth,
+      28 * gridHeight,
+      0,
+      1,
       [
-        { x: 23 * gridWidth, y: 23 * gridHeight},
-        { x: 20 * gridWidth, y: 23 * gridHeight},
-        { x: 20 * gridWidth, y: 20 * gridHeight},
-        { x: 23 * gridWidth, y: 20 * gridHeight},
-        { x: 23 * gridWidth, y: 17 * gridHeight},
-        { x: 17 * gridWidth, y: 17 * gridHeight},
-        { x: 17 * gridWidth, y: 22 * gridHeight},
-        { x: 15 * gridWidth, y: 22 * gridHeight},
-        { x: 15 * gridWidth, y: 17 * gridHeight},
-        { x: 14 * gridWidth, y: 17 * gridHeight},
+        { x: 23 * gridWidth, y: 23 * gridHeight },
+        { x: 20 * gridWidth, y: 23 * gridHeight },
+        { x: 20 * gridWidth, y: 20 * gridHeight },
+        { x: 23 * gridWidth, y: 20 * gridHeight },
+        { x: 23 * gridWidth, y: 17 * gridHeight },
+        { x: 17 * gridWidth, y: 17 * gridHeight },
+        { x: 17 * gridWidth, y: 22 * gridHeight },
+        { x: 15 * gridWidth, y: 22 * gridHeight },
+        { x: 15 * gridWidth, y: 17 * gridHeight },
+        { x: 14 * gridWidth, y: 17 * gridHeight },
       ],
       {
         x: 420,
-        y: 408
+        y: 408,
       }
     )
-  )
-  
-  zombieTypes.forEach((zombie, i) => {
-    zombies.push(zombie);
-  })
-  console.log("cicaaaaaa");
-  zombies.forEach((zombie) => {
-    console.log(zombie);
-  })
+  );
 }
-
-
-function preload () {
-  
-}
-window.preload = preload;
-
-
-
 window.setup = setup;
+
+function preload() {}
+window.preload = preload;
 
 // const player = new Player(0, 0);
 const bulletManager = new BulletManager();
@@ -229,6 +345,57 @@ function drawGrid() {
   pop();
 }
 
+function resetSettings() {
+  score = 0;
+  generationElapsed = 0;
+  isWaiting = true;
+  zombies = [];
+  zombieTypes.forEach((zombie) => {
+    // base zombie generation
+    generateZombie(deepCopy(zombie));
+  });
+}
+
+function shadowedText(str, x, y, offsetx, offsety, alpha) {
+  push();
+  fill(0, 0, 0, alpha);
+  text(str, x + offsetx, y + offsety);
+  pop();
+  text(str, x, y);
+}
+
+function generateZombie(zombie) {
+  zombies.push(zombie);
+}
+
+function deepCopy(obj) {
+  // Check for null or non-object types
+  if (obj === null || typeof obj !== "object") {
+    return obj;
+  }
+
+  // Handle dates
+  if (obj instanceof Date) {
+    return new Date(obj);
+  }
+
+  // Handle arrays
+  if (Array.isArray(obj)) {
+    return obj.map(deepCopy);
+  }
+
+  // Handle objects with constructor (instances of a class)
+  let copy = Object.create(Object.getPrototypeOf(obj));
+
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      copy[key] = deepCopy(obj[key]);
+    }
+  }
+
+  return copy;
+}
+
 const obstacles = [
   { x: 140, y: 180, w: 80, h: 80 },
   { x: 450, y: 100, w: 40, h: 70 },
@@ -241,9 +408,9 @@ const obstacles = [
   { x: 565, y: 420, w: 60, h: 40 },
   { x: 240, y: 30, w: 130, h: 70 },
   { x: 50, y: 270, w: 30, h: 80 },
-  { x: 310, y: 580, w:50, h: 70 },
-  { x: 420, y: 590, w:60, h: 40 },
-  { x: 480, y: 615, w:30, h: 40 },
+  { x: 310, y: 580, w: 50, h: 70 },
+  { x: 420, y: 590, w: 60, h: 40 },
+  { x: 480, y: 615, w: 30, h: 40 },
 ];
 
 function drawObstacles() {
@@ -264,42 +431,43 @@ function drawCrosshair() {
 }
 
 function lose() {
-  push();
-  fill(255);
-  textSize(50);
-  text('You Died', 250, 180, 300, 200);
-  pop();
+  if (score > highscore) {
+    highscore = score;
+    storeItem("high score", highscore);
+  }
+
+  console.log(score);
 }
 
 function replay() {
   push();
   fill(255);
   textSize(15);
-  text('press spacebar to replay', 300, 600, 300, 200);
+  text("press spacebar to replay", 300, 600, 300, 200);
   pop();
 }
 
 function randomRange(min, max, whole = false) {
   let num = Math.random() * (max - min) + min;
-  return whole ? Math.round(num) : num;
+  return whole ? Math.floor(num) : num;
 }
 
-randomRange(10, 30)
+randomRange(10, 30);
 
 function keyPressed() {
-  console.log("yeyyyy")
+  console.log("yeyyyy");
   if (key === " ") {
-    console.log(gameState)
+    //console.log(gameState);
     switch (gameState) {
       case "start":
-      case "died":
+      case "gameover":
       case "won":
+        resetSettings();
         gameState = "game";
-        break
-
+        break;
     }
-    console.log(gameState)
-    console.log("does it work?")
+    //console.log(gameState);
+    //console.log("does it work?");
   }
 }
 
@@ -330,8 +498,6 @@ function draw() {
   clear();
   gameStates.get(gameState).run();
   //console.log(gameState);
-
 }
 
 window.draw = draw;
-
