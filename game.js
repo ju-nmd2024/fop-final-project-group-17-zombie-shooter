@@ -4,6 +4,8 @@ import Spawnpoint from "./spawnpoint.js";
 import Zombie from "./zombie.js";
 import State from "./state.js";
 
+//ideas and help from Bence Tuzson (intellectual property of Bence)
+
 /** @type {Object} */
 const grid = {
   height: 24,
@@ -359,6 +361,8 @@ function drawGrid() {
   pop();
 }
 
+//ideas and help from Bence Tuzson (intellectual property of Bence)
+
 function resetSettings() {
   score = 0;
   generationElapsed = 0;
@@ -443,6 +447,8 @@ function drawCrosshair() {
   line(mouseX, mouseY - 10, mouseX, mouseY + 10); // Vertical line
   pop();
 }
+
+//ideas and help from Bence Tuzson (intellectual property of Bence)
 
 function lose() {
   if (score > highscore) {
