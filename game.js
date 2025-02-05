@@ -4,22 +4,36 @@ import Spawnpoint from "./spawnpoint.js";
 import Zombie from "./zombie.js";
 import State from "./state.js";
 
-const gridHeight = 24;
-const gridWidth = 30;
+/** @type {Object} */
+const grid = {
+  height: 24,
+  width: 30,
+};
+
+/**@type {Number} */
 let x = 0;
+
+/** @type {Number} */
 let y = 0;
 
+/** @type {*string} */
 let gameState = "start";
+
+/** @type {Map<string, State>} */
 let gameStates = new Map();
+
+/** @type {Map<string, Image>} */
 let graphics = new Map();
-/**
- *  @type {Map<string, Zombie>}
- */
+
+/** @type {Map<string, Zombie>} */
 let zombieTypes = new Map();
 
+/** @type {Zombie[]} */
 let zombies = [];
 
+/** @type {Number} */
 let score;
+
 let highscore;
 let spawnRarity = 5;
 
@@ -225,20 +239,20 @@ function setup() {
   zombieTypes.set(
     1,
     new Zombie(
-      2 * gridWidth,
-      2 * gridHeight,
+      2 * grid.width,
+      2 * grid.height,
       0,
       1,
       [
-        { x: 7 * gridWidth, y: 2 * gridHeight },
-        { x: 7 * gridWidth, y: 6 * gridHeight },
-        { x: 12 * gridWidth, y: 6 * gridHeight },
-        { x: 12 * gridWidth, y: 9 * gridHeight },
-        { x: 10 * gridWidth, y: 9 * gridHeight },
-        { x: 10 * gridWidth, y: 13 * gridHeight },
-        { x: 7 * gridWidth, y: 13 * gridHeight },
-        { x: 7 * gridWidth, y: 17 * gridHeight },
-        { x: 11 * gridWidth, y: 17 * gridHeight },
+        { x: 7 * grid.width, y: 2 * grid.height },
+        { x: 7 * grid.width, y: 6 * grid.height },
+        { x: 12 * grid.width, y: 6 * grid.height },
+        { x: 12 * grid.width, y: 9 * grid.height },
+        { x: 10 * grid.width, y: 9 * grid.height },
+        { x: 10 * grid.width, y: 13 * grid.height },
+        { x: 7 * grid.width, y: 13 * grid.height },
+        { x: 7 * grid.width, y: 17 * grid.height },
+        { x: 11 * grid.width, y: 17 * grid.height },
       ],
       {
         x: 330,
@@ -250,18 +264,18 @@ function setup() {
   zombieTypes.set(
     2,
     new Zombie(
-      23 * gridWidth,
-      2 * gridHeight,
+      23 * grid.width,
+      2 * grid.height,
       0,
       1,
       [
-        { x: 23 * gridWidth, y: 11 * gridHeight },
-        { x: 18 * gridWidth, y: 11 * gridHeight },
-        { x: 18 * gridWidth, y: 2 * gridHeight },
-        { x: 13 * gridWidth, y: 2 * gridHeight },
-        { x: 13 * gridWidth, y: 13 * gridHeight },
-        { x: 12 * gridWidth, y: 13 * gridHeight },
-        { x: 12 * gridWidth, y: 15 * gridHeight },
+        { x: 23 * grid.width, y: 11 * grid.height },
+        { x: 18 * grid.width, y: 11 * grid.height },
+        { x: 18 * grid.width, y: 2 * grid.height },
+        { x: 13 * grid.width, y: 2 * grid.height },
+        { x: 13 * grid.width, y: 13 * grid.height },
+        { x: 12 * grid.width, y: 13 * grid.height },
+        { x: 12 * grid.width, y: 15 * grid.height },
       ],
       {
         x: 360,
@@ -273,20 +287,20 @@ function setup() {
   zombieTypes.set(
     3,
     new Zombie(
-      2 * gridWidth,
-      28 * gridHeight,
+      2 * grid.width,
+      28 * grid.height,
       0,
       1,
       [
-        { x: 2 * gridWidth, y: 15 * gridHeight },
-        { x: 4 * gridWidth, y: 15 * gridHeight },
-        { x: 4 * gridWidth, y: 23 * gridHeight },
-        { x: 6 * gridWidth, y: 23 * gridHeight },
-        { x: 6 * gridWidth, y: 28 * gridHeight },
-        { x: 9 * gridWidth, y: 28 * gridHeight },
-        { x: 9 * gridWidth, y: 22 * gridHeight },
-        { x: 12 * gridWidth, y: 22 * gridHeight },
-        { x: 12 * gridWidth, y: 18 * gridHeight },
+        { x: 2 * grid.width, y: 15 * grid.height },
+        { x: 4 * grid.width, y: 15 * grid.height },
+        { x: 4 * grid.width, y: 23 * grid.height },
+        { x: 6 * grid.width, y: 23 * grid.height },
+        { x: 6 * grid.width, y: 28 * grid.height },
+        { x: 9 * grid.width, y: 28 * grid.height },
+        { x: 9 * grid.width, y: 22 * grid.height },
+        { x: 12 * grid.width, y: 22 * grid.height },
+        { x: 12 * grid.width, y: 18 * grid.height },
       ],
       {
         x: 360,
@@ -298,21 +312,21 @@ function setup() {
   zombieTypes.set(
     4,
     new Zombie(
-      23 * gridWidth,
-      28 * gridHeight,
+      23 * grid.width,
+      28 * grid.height,
       0,
       1,
       [
-        { x: 23 * gridWidth, y: 23 * gridHeight },
-        { x: 20 * gridWidth, y: 23 * gridHeight },
-        { x: 20 * gridWidth, y: 20 * gridHeight },
-        { x: 23 * gridWidth, y: 20 * gridHeight },
-        { x: 23 * gridWidth, y: 17 * gridHeight },
-        { x: 17 * gridWidth, y: 17 * gridHeight },
-        { x: 17 * gridWidth, y: 22 * gridHeight },
-        { x: 15 * gridWidth, y: 22 * gridHeight },
-        { x: 15 * gridWidth, y: 17 * gridHeight },
-        { x: 14 * gridWidth, y: 17 * gridHeight },
+        { x: 23 * grid.width, y: 23 * grid.height },
+        { x: 20 * grid.width, y: 23 * grid.height },
+        { x: 20 * grid.width, y: 20 * grid.height },
+        { x: 23 * grid.width, y: 20 * grid.height },
+        { x: 23 * grid.width, y: 17 * grid.height },
+        { x: 17 * grid.width, y: 17 * grid.height },
+        { x: 17 * grid.width, y: 22 * grid.height },
+        { x: 15 * grid.width, y: 22 * grid.height },
+        { x: 15 * grid.width, y: 17 * grid.height },
+        { x: 14 * grid.width, y: 17 * grid.height },
       ],
       {
         x: 420,
@@ -337,9 +351,9 @@ function drawGrid() {
   push();
   stroke(255, 255, 255, 0);
   noFill();
-  for (let x = 0; x < gridHeight; x++) {
-    for (let y = 0; y < gridHeight; y++) {
-      rect(x * gridWidth, y * gridWidth, gridWidth, gridWidth);
+  for (let x = 0; x < grid.height; x++) {
+    for (let y = 0; y < grid.height; y++) {
+      rect(x * grid.width, y * grid.width, grid.width, grid.width);
     }
   }
   pop();
