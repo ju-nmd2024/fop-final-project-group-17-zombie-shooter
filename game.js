@@ -145,7 +145,7 @@ function setup() {
       }
 
       push();
-      // Translate the origin to the center. - how do you make it have the center?
+
       translate(370, 400);
 
       // Get the mouse's coordinates relative to the origin.
@@ -515,3 +515,5 @@ function draw() {
 }
 
 window.draw = draw;
+
+// link to chatgpt conversation https://chatgpt.com/share/67a34c0e-6f20-8002-9aca-f7f6396397e3
